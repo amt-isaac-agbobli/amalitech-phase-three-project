@@ -1,6 +1,6 @@
 import {Request,Response,NextFunction} from 'express' ;
 import * as AdminService from '../services/admin.service' ;
-import {body , validationResult} from 'express-validator' ;
+import {validationResult} from 'express-validator' ;
 
 export const registerAdmin = async (req:Request,res:Response,next:NextFunction) => {
     try {
