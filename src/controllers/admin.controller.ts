@@ -37,3 +37,12 @@ export const getAdmins = async (req:Request,res:Response,next:NextFunction) => {
         next(error) ;
     }
 } ;
+
+export const getAdmin = async (req:Request,res:Response,next:NextFunction) => {
+    try {
+        const admin = await AdminService.getAdmin(Number(req.params.id)) ;
+        return res.status(200).json({admin}) ;
+    } catch (error) {
+        next(error) ;
+    }
+};

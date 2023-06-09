@@ -1,6 +1,7 @@
 import { db } from "../config/db.server";
 import * as helper from "../utils/helper";
 import { Admin, AdminRead } from "../types/admin.type";
+import exp from "constants";
 
 
 export const registerAdmin = async (admin: Admin): Promise<AdminRead> => {
@@ -42,4 +43,17 @@ export const getAdmins = async (): Promise<AdminRead[]> => {
          createdAt: true,
          updatedAt: true}
    })
+} ;
+
+export const getAdmin = async (id: number): Promise<AdminRead> => {
+   const admin = await db.admin.findUnique({
+      where: { id },
+      select: {
+         id: true,
+         email: true,
+         createdAt: true,
+         updatedAt: true}
+   });
+   if (!admin) throw new Error("Admin Does Not Exist");
+   return admin;
 } ;

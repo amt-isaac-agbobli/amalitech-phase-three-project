@@ -12,6 +12,8 @@ adminRouter.post('/login', body('email').isEmail(), body('password').isString(),
 
 adminRouter.get('/' , addminController.getAdmins) ;
 
+adminRouter.get('/:id' , addminController.getAdmin) ;
+
 
 
 
