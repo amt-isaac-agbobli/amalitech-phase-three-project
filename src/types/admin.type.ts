@@ -10,4 +10,5 @@ type AdminRead = {
     updatedAt : Date
 }
 
+
 export {Admin , AdminRead}
