@@ -1,7 +1,7 @@
 import { db } from "../config/db.server";
 import * as helper from "../utils/helper";
 import { Admin, AdminRead } from "../types/admin.type";
-import exp from "constants";
+
 
 
 export const registerAdmin = async (admin: Admin): Promise<AdminRead> => {
@@ -73,3 +73,4 @@ export const deleteAdmin = async (id: number): Promise<String> => {
    });
    return "Admin delete Succesfull";
 }
+

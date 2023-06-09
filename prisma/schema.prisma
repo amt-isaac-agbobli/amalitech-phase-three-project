@@ -19,6 +19,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt  DateTime @updatedAt
   isVarified Boolean @default(false)
+  role String @default("user")
 }
 
 model Admin {
