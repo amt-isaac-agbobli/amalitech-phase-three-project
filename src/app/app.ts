@@ -8,6 +8,7 @@ const app: Application = express();
 app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({extended:false}));
 
 
 //Error handling middleware
