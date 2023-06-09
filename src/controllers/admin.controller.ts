@@ -1,6 +1,7 @@
 import {Request,Response,NextFunction} from 'express' ;
 import * as AdminService from '../services/admin.service' ;
 import {validationResult} from 'express-validator' ;
+import exp from 'constants';
 
 export const registerAdmin = async (req:Request,res:Response,next:NextFunction) => {
     try {
@@ -27,3 +28,12 @@ export const loginAdmin = async (req:Request,res:Response,next:NextFunction) => 
         next(error) ;
     }
 };
+
+export const getAdmins = async (req:Request,res:Response,next:NextFunction) => {
+    try {
+        const admins = await AdminService.getAdmins() ;
+        return res.status(200).json({admins}) ;
+    } catch (error) {
+        next(error) ;
+    }
+} ;

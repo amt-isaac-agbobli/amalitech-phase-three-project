@@ -30,6 +30,16 @@ export const loginAdmin = async (admin: Admin): Promise<string> => {
    if (!adminExist) throw new Error("Admin Does Not Exist");
    const isMatch = await helper.comparePassword(password, adminExist.password);
    if (!isMatch) throw new Error("Invalid Credentials");
-   //return await helper.generateToken(adminExist.id);
-   return isMatch.toString();
+    return await helper.generateToken(adminExist.id , adminExist.email);
+  
 }
+
+export const getAdmins = async (): Promise<AdminRead[]> => {
+   return await db.admin.findMany({
+      select: {
+         id: true,
+         email: true,
+         createdAt: true,
+         updatedAt: true}
+   })
+} ;

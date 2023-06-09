@@ -1,4 +1,7 @@
 import bcrypt from 'bcryptjs' ;
+import jwt from 'jsonwebtoken' ;
+import * as dotenv from 'dotenv' ;
+dotenv.config() ;
 
 
 export const hashPassword = async (password: string) :Promise<string> => {
@@ -9,3 +12,13 @@ export const hashPassword = async (password: string) :Promise<string> => {
 export const comparePassword = async (password: string, hashPassword: string) :Promise<boolean> => {
     return await bcrypt.compare(password, hashPassword);
 };
+
+export const generateToken = async (id: number , email :string) :Promise<string> => {
+    return await jwt.sign({ id , email }, process.env.JWT_SECRET!, {
+        expiresIn: process.env.JWT_EXPIRE
+    });
+};
+
+export const verifyToken = async (token: string) :Promise<string | object> => {
+    return await jwt.verify(token, process.env.JWT_SECRET!);
+} ;
