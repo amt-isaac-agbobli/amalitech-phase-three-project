@@ -3,6 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import { errorHandler, notFound } from '../middleware/globaErrorHandler';
 import adminRouter from '../routes/admin.route';
+import userRouter from '../routes/user.route';
 
 
 const app: Application = express();
@@ -12,7 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 //Routes
-app.use('/api/v1/admin/' , adminRouter) ;
+app.use('/api/v1/admins/' , adminRouter) ;
+app.use('/api/v1/users/' , userRouter) ;
 
 //Error handling middleware
 app.use(notFound);

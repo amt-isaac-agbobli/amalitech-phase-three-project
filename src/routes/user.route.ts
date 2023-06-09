@@ -1,0 +1,15 @@
+import { Router } from "express";
+import express  from "express";
+import {userReigister} from '../controllers/user.controllers' ;
+import {body} from 'express-validator' ;
+
+const userRouter : Router = express.Router() ;
+
+userRouter.post('/sign-up' ,body("firstName").isString(), body("lastName").isString(),
+                            body("email").isEmail(),body("password").isStrongPassword(),
+                            userReigister)
+
+
+
+
+export default userRouter ;
