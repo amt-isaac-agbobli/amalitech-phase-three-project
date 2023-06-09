@@ -14,6 +14,8 @@ adminRouter.get('/' , addminController.getAdmins) ;
 
 adminRouter.get('/:id' , addminController.getAdmin) ;
 
+adminRouter.delete('/:id' , addminController.deleteAdmin) ;
+
 
 
 

@@ -57,3 +57,19 @@ export const getAdmin = async (id: number): Promise<AdminRead> => {
    if (!admin) throw new Error("Admin Does Not Exist");
    return admin;
 } ;
+
+export const deleteAdmin = async (id: number): Promise<String> => {
+   const admin = await db.admin.findUnique({
+      where: { id },
+      select: {
+         id: true,
+         email: true,
+         createdAt: true,
+         updatedAt: true}
+   });
+   if (!admin) throw new Error("Admin Does Not Exist");
+   await db.admin.delete({
+      where: { id }
+   });
+   return "Admin delete Succesfull";
+}

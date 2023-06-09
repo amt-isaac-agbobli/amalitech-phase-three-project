@@ -46,3 +46,12 @@ export const getAdmin = async (req:Request,res:Response,next:NextFunction) => {
         next(error) ;
     }
 };
+
+export const deleteAdmin = async (req:Request,res:Response,next:NextFunction) => {
+    try {
+        const admin = await AdminService.deleteAdmin(Number(req.params.id)) ;
+        return res.status(200).json({admin}) ;
+    } catch (error) {
+        next(error) ;
+    }
+} ;
