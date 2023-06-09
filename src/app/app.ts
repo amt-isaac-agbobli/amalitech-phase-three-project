@@ -1,18 +1,18 @@
-import express , {Request ,Response , Application} from 'express';
-import cors from 'cors' ;
+import express, { Application } from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
+import { errorHandler, notFound } from '../middleware/globaErrorHandler';
 
 
-const app : Application = express();
+const app: Application = express();
+app.use(morgan('dev'));
 app.use(cors());
-app.use(express.json()) ;
-
-app.get('/', (req : Request ,res: Response) =>{
-    res.status(200).json({
-        Status : "Success",
-        message : "Development Server"
-    });
-    console.log("I'm Working") ;
-});
+app.use(express.json());
 
 
-export default  app ;
+//Error handling middleware
+app.use(notFound);
+app.use(errorHandler);
+
+
+export default app;
