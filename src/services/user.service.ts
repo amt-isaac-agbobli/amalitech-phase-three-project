@@ -1,7 +1,7 @@
 import { promises } from 'dns';
 import {db} from '../config/db.server' ;
 import { User } from '../types/user.types';
-import { hashPassword } from '../utils/helper';
+import { hashPassword ,comparePassword } from '../utils/helper';
 
 export const userReigister = async (user:User) => {
     const {firstName , lastName ,email,password } = user ;
@@ -29,4 +29,18 @@ export const userReigister = async (user:User) => {
         }
     }) ;
     
+};
+
+export const userLogin = async (email:string , password:string) => {
+    const user = await db.user.findUnique({
+        where:{email}
+    }) ;
+    if(!user){
+        throw new Error('User not found') ;
+    }
+    const isMatch = await comparePassword(password,user.password) ;
+    if(!isMatch){
+        throw new Error('Invalid credentials') ;
+    }
+    return user ;
 }
