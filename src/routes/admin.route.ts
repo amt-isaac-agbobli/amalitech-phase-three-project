@@ -8,6 +8,7 @@ const adminRouter : Router = express.Router();
 
 adminRouter.post('/register', body('email').isEmail(), body('password').isStrongPassword(),
             addminController.registerAdmin); 
+adminRouter.post('/login', body('email').isEmail(), body('password').isString(),addminController.loginAdmin);
 
 adminRouter.get('/', async(req ,res)=>{
     res.status(200).json({
