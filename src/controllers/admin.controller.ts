@@ -1,7 +1,7 @@
 import {Request,Response,NextFunction} from 'express' ;
 import * as AdminService from '../services/admin.service' ;
 import {validationResult} from 'express-validator' ;
-import exp from 'constants';
+import { CustomRequest } from '../middleware/verification';
 
 export const registerAdmin = async (req:Request,res:Response,next:NextFunction) => {
     try {
@@ -32,6 +32,8 @@ export const loginAdmin = async (req:Request,res:Response,next:NextFunction) => 
 export const getAdmins = async (req:Request,res:Response,next:NextFunction) => {
     try {
         const admins = await AdminService.getAdmins() ;
+        const user = (req as CustomRequest).token
+        console.log(user) ;
         return res.status(200).json({admins}) ;
     } catch (error) {
         next(error) ;
@@ -40,7 +42,7 @@ export const getAdmins = async (req:Request,res:Response,next:NextFunction) => {
 
 export const getAdmin = async (req:Request,res:Response,next:NextFunction) => {
     try {
-        const admin = await AdminService.getAdmin(Number(req.params.id)) ;
+        const admin = await AdminService.getAdmin(Number(req.params.id)) ;    
         return res.status(200).json({admin}) ;
     } catch (error) {
         next(error) ;
