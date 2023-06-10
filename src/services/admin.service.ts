@@ -23,15 +23,15 @@ export const registerAdmin = async (admin: Admin): Promise<AdminRead> => {
    })
 } ;
 
-export const loginAdmin = async (admin: Admin): Promise<string> => {
-   const { email, password } = admin;
+export const loginAdmin = async (password:string,email:string) : Promise<AdminRead> => {
+  
    const adminExist = await db.admin.findUnique({
       where: { email },
    });
    if (!adminExist) throw new Error("Admin Does Not Exist");
    const isMatch = await helper.comparePassword(password, adminExist.password);
    if (!isMatch) throw new Error("Invalid Credentials");
-    return await helper.generateToken(adminExist.id , adminExist.email);
+    return adminExist ;
   
 }
 

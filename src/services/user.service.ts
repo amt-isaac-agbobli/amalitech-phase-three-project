@@ -1,9 +1,8 @@
-import { promises } from 'dns';
 import {db} from '../config/db.server' ;
-import { User } from '../types/user.types';
+import { User,UserRead } from '../types/user.types';
 import { hashPassword ,comparePassword } from '../utils/helper';
 
-export const userReigister = async (user:User) => {
+export const userReigister = async (user:User) : Promise<UserRead> =>   {
     const {firstName , lastName ,email,password } = user ;
     const userExist = await db.user.findUnique({
         where:{email}
@@ -31,7 +30,7 @@ export const userReigister = async (user:User) => {
     
 };
 
-export const userLogin = async (email:string , password:string) => {
+export const userLogin = async (email:string , password:string) :Promise<UserRead> => {
     const user = await db.user.findUnique({
         where:{email}
     }) ;
