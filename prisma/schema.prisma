@@ -28,6 +28,13 @@ model Admin {
   updatedAt DateTime @updatedAt
 }
 
+model Otp{
+  email     String   @unique
+  otp       String
+  createdAt DateTime @default(now())
+  expiredAt DateTime 
+}
+
 enum Role {
   USER
   ADMIN
