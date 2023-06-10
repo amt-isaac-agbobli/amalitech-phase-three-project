@@ -37,8 +37,8 @@ export const loginAdmin = async (req:Request,res:Response,next:NextFunction) => 
 export const getAdmins = async (req:Request,res:Response,next:NextFunction) => {
     try {
         const admins = await AdminService.getAdmins() ;
-        const user = (req as CustomRequest).token
-        console.log(user) ;
+        const admin = (req as CustomRequest).token
+        console.log(admin) ;
         return res.status(200).json({admins}) ;
     } catch (error) {
         next(error) ;

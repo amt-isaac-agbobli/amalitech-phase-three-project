@@ -16,7 +16,7 @@ export const userReigister = async (req: Request, res: Response, next: NextFunct
         next(error)
     }
 
-} ;
+};
 
 export const userLogin = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -24,25 +24,25 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
         if (!errors.isEmpty) {
             return res.status(400).json({ errors: errors.array() });
         }
-        const {email , password} = req.body ;
-        const user = await userService.userLogin(email,password) ;
-        const token = await generateToken(user.id,user.email) ;
+        const { email, password } = req.body;
+        const user = await userService.userLogin(email, password);
+        const token = await generateToken(user.id, user.email);
         return res.status(200).json({
-            Token : token
+            Token: token
         });
     } catch (error) {
-        next(error) ;
+        next(error);
     }
 
-} ;
+};
 
-export const userProfile = async(req:Request , res :Response , next:NextFunction) =>{
+export const userProfile = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const user : any = (req as CustomRequest).token ;
-        const profile = await userService.userProfile(user.email) ;
-        console.log(user.email) ;
-        return res.status(200).json(profile) ;
-        
+        const user: any = (req as CustomRequest).token;
+        const profile = await userService.userProfile(user.email);
+        console.log(user.email);
+        return res.status(200).json(profile);
+
     } catch (error) {
         next(error)
     }
