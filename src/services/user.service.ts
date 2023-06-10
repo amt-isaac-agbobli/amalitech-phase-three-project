@@ -42,4 +42,26 @@ export const userLogin = async (email:string , password:string) :Promise<UserRea
         throw new Error('Invalid credentials') ;
     }
     return user ;
-}
+} ;
+
+export const userProfile = async (email:string) :Promise<UserRead | null> => {
+    const profile = await db.user.findUnique({
+        where:{
+            email
+        },
+        select:{
+            email:true,
+            id : true,
+            firstName: true,
+            lastName:true,
+            createdAt: true ,
+            updatedAt: true,
+            role: true
+        }
+    }) ;
+    if(!profile){
+        throw new Error("Profile Not Found")
+    }
+    return profile ;
+
+} ;
