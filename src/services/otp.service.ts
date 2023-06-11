@@ -1,14 +1,15 @@
 import { db } from '../config/db.server';
 import { generateOtp } from '../utils/generateOtp';
 import { sendEmail } from '../utils/send.email';
-import { hashData } from '../utils/helper';
-import { Otp, OtpOption } from '../types/otp.type'
+import { compareData, hashData } from '../utils/helper';
+import { Otp, OtpOption, OtpVarifiedOption } from '../types/otp.type'
 import * as dotenv from 'dotenv';
+import { realpathSync } from 'fs';
 dotenv.config();
 
 
 
-export const deleteUser = async (email: string) => {
+export const deleteOtp = async (email: string) => {
     try {
         const emailExit = await db.otp.findUnique({ where: { email } });
         if (emailExit) {
@@ -55,7 +56,7 @@ export const sendOtp = async (body: OtpOption) => {
         };
 
         await sendEmail(mailOption);
-        await deleteUser(email);
+        await deleteOtp(email);
         await registerOtp({ email, otpHash }, duration)
         return { message: "Otp sent successfully" };
 
@@ -63,3 +64,31 @@ export const sendOtp = async (body: OtpOption) => {
         throw error;
     }
 };
+
+export const verifyOtp = async (verifiedOption : OtpVarifiedOption) => {
+    try {
+        const {email , otp} = verifiedOption ;
+        if(!(email && otp)){
+            throw Error("Provide values for email and Otp") ;
+        }
+        const matchedOTPRecord = await db.otp.findUnique({ where: { email } });
+        if(!matchedOTPRecord){
+            throw Error("No OTP Records Found") ;
+        }
+        const {expiredAt} = matchedOTPRecord ;
+        const expiredDate : number = Number(expiredAt);
+
+        if(expiredDate < Date.now()){
+           // await deleteOtp(email) ;
+            throw Error("Code has expired. Request for new One")
+        }
+        const hashedOtp = matchedOTPRecord.otp;
+        const validOtp = await compareData(otp , hashedOtp) ;
+        
+        return validOtp ;
+        
+    } catch (error) {
+        throw error ;
+    }
+} ; 
+    

@@ -1,6 +1,6 @@
 import express from 'express';
 import { Request, Response, NextFunction } from "express";
-import { sendOtp } from '../services/otpsend.service';
+import { sendOtp, verifyOtp } from '../services/otp.service';
 
 const OtpRouter = express.Router();
 
@@ -15,5 +15,18 @@ OtpRouter.post('/sendOtp', async (req: Request, res: Response, next: NextFunctio
         next(error);
     }
 });
+
+OtpRouter.post('/verify' , async (req:Request , res:Response , next:NextFunction) => {
+     try {
+        const {email , otp } = req.body ;
+        const validOtp = await verifyOtp({email , otp}) ;
+        res.status(200).json({
+            valid : validOtp
+        })
+        
+     } catch (error) {
+        next(error) ;
+     }
+}) ;
 
 export default OtpRouter;
