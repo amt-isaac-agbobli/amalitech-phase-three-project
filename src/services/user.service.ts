@@ -1,6 +1,6 @@
 import {db} from '../config/db.server' ;
 import { User,UserRead } from '../types/user.types';
-import { hashPassword ,comparePassword } from '../utils/helper';
+import { hashData ,compareData } from '../utils/helper';
 
 export const userReigister = async (user:User) : Promise<UserRead> =>   {
     const {firstName , lastName ,email,password } = user ;
@@ -14,7 +14,7 @@ export const userReigister = async (user:User) : Promise<UserRead> =>   {
             firstName , 
             lastName,
             email, 
-            password : await hashPassword(password)
+            password : await hashData(password)
          
         },
         select:{
@@ -37,7 +37,7 @@ export const userLogin = async (email:string , password:string) :Promise<UserRea
     if(!user){
         throw new Error('User not found') ;
     }
-    const isMatch = await comparePassword(password,user.password) ;
+    const isMatch = await compareData(password,user.password) ;
     if(!isMatch){
         throw new Error('Invalid credentials') ;
     }

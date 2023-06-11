@@ -1,7 +1,7 @@
 import { db } from '../config/db.server';
 import { generateOtp } from '../utils/generateOtp';
 import { sendEmail } from '../utils/send.email';
-import { hashPassword } from '../utils/helper';
+import { hashData } from '../utils/helper';
 import { Otp, OtpOption } from '../types/otp.type'
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -14,10 +14,10 @@ export const deleteUser = async (email: string) => {
         if (emailExit) {
             await db.otp.delete({
                 where: { email }
-            }) ;
+            });
         }
     } catch (error) {
-        throw error ;
+        throw error;
     }
 };
 
@@ -45,7 +45,7 @@ export const sendOtp = async (body: OtpOption) => {
         }
 
         const otp = await generateOtp();
-        const otpHash = await hashPassword(otp.toString());
+        const otpHash = await hashData(otp.toString());
 
         const mailOption = {
             from: process.env.EMAIL,
@@ -58,6 +58,7 @@ export const sendOtp = async (body: OtpOption) => {
         await deleteUser(email);
         await registerOtp({ email, otpHash }, duration)
         return { message: "Otp sent successfully" };
+
     } catch (error) {
         throw error;
     }

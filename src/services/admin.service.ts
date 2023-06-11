@@ -1,5 +1,5 @@
 import { db } from "../config/db.server";
-import * as helper from "../utils/helper";
+import { hashData, compareData } from "../utils/helper";
 import { Admin, AdminRead } from "../types/admin.type";
 
 
@@ -13,26 +13,27 @@ export const registerAdmin = async (admin: Admin): Promise<AdminRead> => {
    return await db.admin.create({
       data: {
          email,
-         password: await helper.hashPassword(password)
+         password: await hashData(password)
       },
       select: {
          id: true,
          email: true,
          createdAt: true,
-         updatedAt: true}
+         updatedAt: true
+      }
    })
-} ;
+};
 
-export const loginAdmin = async (password:string,email:string) : Promise<AdminRead> => {
-  
+export const loginAdmin = async (password: string, email: string): Promise<AdminRead> => {
+
    const adminExist = await db.admin.findUnique({
       where: { email },
    });
    if (!adminExist) throw new Error("Admin Does Not Exist");
-   const isMatch = await helper.comparePassword(password, adminExist.password);
+   const isMatch = await compareData(password, adminExist.password);
    if (!isMatch) throw new Error("Invalid Credentials");
-    return adminExist ;
-  
+   return adminExist;
+
 }
 
 export const getAdmins = async (): Promise<AdminRead[]> => {
@@ -41,9 +42,10 @@ export const getAdmins = async (): Promise<AdminRead[]> => {
          id: true,
          email: true,
          createdAt: true,
-         updatedAt: true}
+         updatedAt: true
+      }
    })
-} ;
+};
 
 export const getAdmin = async (id: number): Promise<AdminRead> => {
    const admin = await db.admin.findUnique({
@@ -52,11 +54,12 @@ export const getAdmin = async (id: number): Promise<AdminRead> => {
          id: true,
          email: true,
          createdAt: true,
-         updatedAt: true}
+         updatedAt: true
+      }
    });
    if (!admin) throw new Error("Admin Does Not Exist");
    return admin;
-} ;
+};
 
 export const deleteAdmin = async (id: number): Promise<String> => {
    const admin = await db.admin.findUnique({
@@ -65,7 +68,8 @@ export const deleteAdmin = async (id: number): Promise<String> => {
          id: true,
          email: true,
          createdAt: true,
-         updatedAt: true}
+         updatedAt: true
+      }
    });
    if (!admin) throw new Error("Admin Does Not Exist");
    await db.admin.delete({
