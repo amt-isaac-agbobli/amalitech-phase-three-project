@@ -1,43 +1,17 @@
 import express from 'express';
-import { Request, Response, NextFunction } from "express";
-import { sendOtp, sendVerificationEmail, verifyOtp } from '../services/otp.service';
+import { Router } from 'express';
+import { body } from 'express-validator';
+import {sendOtpController ,requestOtpController , verifyEmailController} from '../controllers/otp.controllers'
 
-const OtpRouter = express.Router();
+const OtpRouter : Router = express.Router();
 
 
-OtpRouter.post('/sendOtp', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const { email ,subject ,message , duration } = req.body;
-        const otp = await sendOtp({ email ,subject ,message , duration });
-        return res.status(200).json(otp);
-     
-    } catch (error) {
-        next(error);
-    }
-});
+OtpRouter.post('/sendOtp',body("email").isEmail(),body("subject").isString(),
+               body("message").isString(), sendOtpController);
 
-OtpRouter.post("/requestOTP", async (req:Request ,res:Response , next:NextFunction) => {
-    try {
-        const {email} = req.body ;
-        const createdEmailVerification = await sendVerificationEmail(email);
-        res.status(200).json(createdEmailVerification) ;
-    } catch (error) {
-        next(error)
-    }
-})
+OtpRouter.post("/requestOTP",body("email").isEmail() , requestOtpController)
 
-OtpRouter.post('/verify' , async (req:Request , res:Response , next:NextFunction) => {
-     try {
-        const {email , otp } = req.body ;
-        const validOtp = await verifyOtp({email , otp}) ;
-        res.status(200).json({
-            valid : validOtp
-        })
-        
-     } catch (error) {
-        next(error) ;
-     }
-}) ;
+OtpRouter.post('user/verify' , body("email").isEmail(), body("opt").isString(), verifyEmailController) ;
 
 
 

@@ -24,7 +24,8 @@ export const userReigister = async (user:User) : Promise<UserRead> =>   {
             email : true ,
             createdAt : true ,
             updatedAt : true ,
-            role : true
+            role : true,
+            isVarified : true
         }
     }) ;
     
@@ -42,7 +43,7 @@ export const userLogin = async (email:string , password:string) :Promise<UserRea
         throw new Error('Invalid credentials') ;
     }
     if(!user.isVarified){
-        throw new Error('Please your account is not variefied') ;
+        throw new Error('Please your account is not veriefied') ;
     }
     return user ;
 } ;
@@ -59,7 +60,8 @@ export const userProfile = async (email:string) :Promise<UserRead | null> => {
             lastName:true,
             createdAt: true ,
             updatedAt: true,
-            role: true
+            role: true,
+            isVarified: true
         }
     }) ;
     if(!profile){

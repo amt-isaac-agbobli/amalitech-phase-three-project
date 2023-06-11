@@ -13,4 +13,5 @@ export type UserRead = {
     role : string ;
     createdAt: Date;
     updatedAt: Date;
+    isVarified: boolean;
 };
