@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 import * as userService from '../services/user.service';
 import { generateToken } from "../utils/helper";
-import { CustomRequest } from '../middleware/verification';
+import { CustomRequest } from '../interfaces/verification.interface';
 
 export const userReigister = async (req: Request, res: Response, next: NextFunction) => {
     try {

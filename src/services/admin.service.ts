@@ -1,5 +1,5 @@
 import { db } from "../config/db.server";
-import { hashData, compareData } from "../utils/helper";
+import { hashData ,compareData } from '../utils/helper';
 import { Admin, AdminRead } from "../types/admin.type";
 
 
