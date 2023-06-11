@@ -1,6 +1,6 @@
 import express from 'express';
 import { Request, Response, NextFunction } from "express";
-import { sendOtp, verifyOtp } from '../services/otp.service';
+import { sendOtp, sendVerificationEmail, verifyOtp } from '../services/otp.service';
 
 const OtpRouter = express.Router();
 
@@ -16,6 +16,16 @@ OtpRouter.post('/sendOtp', async (req: Request, res: Response, next: NextFunctio
     }
 });
 
+OtpRouter.post("/requestOTP",async (req:Request ,res:Response , next:NextFunction) => {
+    try {
+        const {email} = req.body ;
+        const createdEmailVerification = await sendVerificationEmail(email);
+        res.status(200).json(createdEmailVerification) ;
+    } catch (error) {
+        next(error)
+    }
+})
+
 OtpRouter.post('/verify' , async (req:Request , res:Response , next:NextFunction) => {
      try {
         const {email , otp } = req.body ;
@@ -28,5 +38,7 @@ OtpRouter.post('/verify' , async (req:Request , res:Response , next:NextFunction
         next(error) ;
      }
 }) ;
+
+
 
 export default OtpRouter;

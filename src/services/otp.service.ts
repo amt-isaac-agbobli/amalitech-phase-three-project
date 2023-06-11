@@ -52,7 +52,7 @@ export const sendOtp = async (body: OtpOption) => {
             from: process.env.EMAIL,
             to: email,
             subject,
-            html: `<p> ${message} </p> <p style="color:tomato; font-size:25px"><b>${otp}</b></p> <p> This otp is valid for ${duration} minutes </p>`
+            html: `<p> ${message} </p> <p style="color:tomato; font-size:25px"><b>${otp}</b></p> <p> This otp is valid for ${duration} hour </p>`
         };
 
         await sendEmail(mailOption);
@@ -92,3 +92,22 @@ export const verifyOtp = async (verifiedOption : OtpVarifiedOption) => {
     }
 } ; 
     
+export const sendVerificationEmail =async (email:string) => {
+    try {
+        const userExit = await db.user.findUnique({ where: { email } });
+        if(!userExit){
+            throw Error("There's no account for provide email. ") ;
+        }
+        const otpDetails = {
+             email,
+             subject : "Email Verification",
+             message : "Verify your email with the following code below.",
+             duration : 1
+        } ;
+        const createdOtp = await sendOtp(otpDetails);
+        return createdOtp ;
+    } catch (error) {
+        throw error
+    }
+    
+}
