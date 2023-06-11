@@ -41,6 +41,9 @@ export const userLogin = async (email:string , password:string) :Promise<UserRea
     if(!isMatch){
         throw new Error('Invalid credentials') ;
     }
+    if(!user.isVarified){
+        throw new Error('Please your account is not variefied') ;
+    }
     return user ;
 } ;
 

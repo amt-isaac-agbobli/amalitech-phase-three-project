@@ -16,7 +16,7 @@ OtpRouter.post('/sendOtp', async (req: Request, res: Response, next: NextFunctio
     }
 });
 
-OtpRouter.post("/requestOTP",async (req:Request ,res:Response , next:NextFunction) => {
+OtpRouter.post("/requestOTP", async (req:Request ,res:Response , next:NextFunction) => {
     try {
         const {email} = req.body ;
         const createdEmailVerification = await sendVerificationEmail(email);

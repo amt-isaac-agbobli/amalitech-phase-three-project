@@ -4,10 +4,7 @@ import { sendEmail } from '../utils/send.email';
 import { compareData, hashData } from '../utils/helper';
 import { Otp, OtpOption, OtpVarifiedOption } from '../types/otp.type'
 import * as dotenv from 'dotenv';
-import { realpathSync } from 'fs';
 dotenv.config();
-
-
 
 export const deleteOtp = async (email: string) => {
     try {
@@ -65,49 +62,48 @@ export const sendOtp = async (body: OtpOption) => {
     }
 };
 
-export const verifyOtp = async (verifiedOption : OtpVarifiedOption) => {
+export const verifyOtp = async (verifiedOption: OtpVarifiedOption) => {
     try {
-        const {email , otp} = verifiedOption ;
-        if(!(email && otp)){
-            throw Error("Provide values for email and Otp") ;
+        const { email, otp } = verifiedOption;
+        if (!(email && otp)) {
+            throw Error("Provide values for email and Otp");
         }
         const matchedOTPRecord = await db.otp.findUnique({ where: { email } });
-        if(!matchedOTPRecord){
-            throw Error("No OTP Records Found") ;
+        if (!matchedOTPRecord) {
+            throw Error("No OTP Records Found");
         }
-        const {expiredAt} = matchedOTPRecord ;
-        const expiredDate : number = Number(expiredAt);
+        const { expiredAt } = matchedOTPRecord;
+        const expiredDate: number = Number(expiredAt);
 
-        if(expiredDate < Date.now()){
-           // await deleteOtp(email) ;
+        if (expiredDate < Date.now()) {
+            // await deleteOtp(email) ;
             throw Error("Code has expired. Request for new One")
         }
         const hashedOtp = matchedOTPRecord.otp;
-        const validOtp = await compareData(otp , hashedOtp) ;
-        
-        return validOtp ;
-        
+        const validOtp = await compareData(otp, hashedOtp);
+
+        return validOtp;
+
     } catch (error) {
-        throw error ;
+        throw error;
     }
-} ; 
-    
-export const sendVerificationEmail =async (email:string) => {
+};
+
+export const sendVerificationEmail = async (email: string) => {
     try {
         const userExit = await db.user.findUnique({ where: { email } });
-        if(!userExit){
-            throw Error("There's no account for provide email. ") ;
+        if (!userExit) {
+            throw Error("There's no account for provide email. ");
         }
         const otpDetails = {
-             email,
-             subject : "Email Verification",
-             message : "Verify your email with the following code below.",
-             duration : 1
-        } ;
+            email,
+            subject: "Email Verification",
+            message: "Verify your email with the following code below.",
+            duration: 1
+        };
         const createdOtp = await sendOtp(otpDetails);
-        return createdOtp ;
+        return createdOtp;
     } catch (error) {
         throw error
     }
-    
-}
+};
