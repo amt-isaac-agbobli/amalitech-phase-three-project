@@ -12,7 +12,15 @@ export const userReigister = async (req: Request, res: Response, next: NextFunct
             return res.status(400).json({ errors: errors.array() });
         }
         const newUser = await userService.userReigister(req.body);
-        await sendVerificationEmail(newUser.email);
+
+        const otpDetails = {
+            email:newUser.email,
+            subject: "Email Verification",
+            message: "Verify your email with the following code below.",
+            duration: 1
+        };
+        
+        await sendVerificationEmail(newUser.email , otpDetails);
         return res.status(201).json({
             Message : "Check your email to verified your account" ,
             newUser

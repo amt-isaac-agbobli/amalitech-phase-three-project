@@ -1,5 +1,3 @@
-import { emitWarning } from "process";
-
 export type OtpOption = {
     email: string;
     subject: string;
@@ -15,4 +13,9 @@ export type Otp = {
 export type OtpVarifiedOption = {
     email: string;
     otp: string;
+};
+
+export type ResetPasswordOption = {
+    email : string;
+    password : string ;
 };

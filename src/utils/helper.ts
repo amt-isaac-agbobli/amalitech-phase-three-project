@@ -4,13 +4,13 @@ import * as dotenv from 'dotenv' ;
 dotenv.config() ;
 
 
-export const hashData = async (password: string) :Promise<string> => {
+export const hashData = async (data: string) :Promise<string> => {
     const salt = await bcrypt.genSalt(10);
-    return await bcrypt.hash(password, salt);
+    return await bcrypt.hash(data, salt);
 };
 
-export const compareData = async (password: string, hashPassword: string) :Promise<boolean> => {
-    return await bcrypt.compare(password, hashPassword);
+export const compareData = async (data: string, hashedData: string) :Promise<boolean> => {
+    return await bcrypt.compare(data, hashedData);
 };
 
 export const generateToken = async (id: number , email :string) :Promise<string> => {

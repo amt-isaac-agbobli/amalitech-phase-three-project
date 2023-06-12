@@ -2,7 +2,7 @@ import { db } from '../config/db.server';
 import { generateOtp } from '../utils/generateOtp';
 import { sendEmail } from '../utils/send.email';
 import { compareData, hashData } from '../utils/helper';
-import { Otp, OtpOption, OtpVarifiedOption } from '../types/otp.type'
+import { Otp, OtpOption, OtpVarifiedOption, ResetPasswordOption } from '../types/otp.type'
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -26,14 +26,23 @@ const registerOtp = async (otpBody: Otp, duration: number) => {
             data: {
                 email,
                 otp: otpHash,
-                expiredAt: new Date(Date.now() + 360000 * + duration)
+                expiredAt: new Date(Date.now() + 30 * 60000 * + duration)
             }
         });
     } catch (error) {
         throw error
     }
 }
-
+export const verifyUser = async (email: string) => {
+    return await db.user.update({
+        where: {
+            email
+        },
+        data: {
+            isVarified: true
+        }
+    });
+};
 
 export const sendOtp = async (body: OtpOption) => {
     try {
@@ -46,7 +55,7 @@ export const sendOtp = async (body: OtpOption) => {
         const otpHash = await hashData(otp.toString());
 
         const mailOption = {
-            from: process.env.EMAIL,
+            from: "File Server",
             to: email,
             subject,
             html: `<p> ${message} </p> <p style="color:tomato; font-size:25px"><b>${otp}</b></p> <p> This otp is valid for ${duration} hour </p>`
@@ -62,9 +71,23 @@ export const sendOtp = async (body: OtpOption) => {
     }
 };
 
-export const verifyOtp = async (verifiedOption: OtpVarifiedOption) => {
+
+export const sendVerificationEmail = async (email: string, otpDetails: OtpOption) => {
     try {
-        const { email, otp } = verifiedOption;
+        const userExit = await db.user.findUnique({ where: { email } });
+        if (!userExit) {
+            throw Error("There's no account for provide email. ");
+        }
+        const createdOtp = await sendOtp(otpDetails);
+        return createdOtp;
+    } catch (error) {
+        throw error
+    }
+};
+
+export const verifyOtp = async (otpVerifiedOption: OtpVarifiedOption) => {
+    try {
+        const { email, otp } = otpVerifiedOption;
         if (!(email && otp)) {
             throw Error("Provide values for email and Otp");
         }
@@ -81,29 +104,23 @@ export const verifyOtp = async (verifiedOption: OtpVarifiedOption) => {
         }
         const hashedOtp = matchedOTPRecord.otp;
         const validOtp = await compareData(otp, hashedOtp);
-
         return validOtp;
-
     } catch (error) {
         throw error;
     }
 };
 
-export const sendVerificationEmail = async (email: string) => {
+export const resetPassword = async (resetPasswordOption: ResetPasswordOption) => {
     try {
-        const userExit = await db.user.findUnique({ where: { email } });
-        if (!userExit) {
-            throw Error("There's no account for provide email. ");
-        }
-        const otpDetails = {
-            email,
-            subject: "Email Verification",
-            message: "Verify your email with the following code below.",
-            duration: 1
-        };
-        const createdOtp = await sendOtp(otpDetails);
-        return createdOtp;
+        const { email, password } = resetPasswordOption;
+        return await db.user.update({
+            where: { email },
+            data: {
+                password: await hashData(password)
+            }
+        })
     } catch (error) {
-        throw error
+        throw error;
     }
 };
+

@@ -1,15 +1,9 @@
 
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
+import {TokenPayload} from '../interfaces/verification.interface'
 import * as dotenv from 'dotenv';
 dotenv.config();
-
-interface TokenPayload {
-    userId: number;
-    email: string;
-    iat: number;
-    exp: number;
-}
 
 export interface CustomRequest extends Request {
     token: string | JwtPayload;
