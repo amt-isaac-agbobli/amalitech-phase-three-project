@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import {validationResult} from 'express-validator' ;
-import { uploadFile } from "../services/file.service";
+import { uploadFile ,getFiles } from "../services/file.service";
 import cloudinary from '../config/cloudinary';
 import { CustomRequest } from "../interfaces/verification.interface";
 import fs from 'fs';
+
 
 
 
@@ -33,7 +34,7 @@ export const uploadFileController = async (req: Request, res: Response, next: Ne
             }, id);
 
             fs.unlinkSync(req.file.path);
-            
+
             res.status(201).json({
                 message: "File uploaded successfully",
                 file
@@ -44,3 +45,13 @@ export const uploadFileController = async (req: Request, res: Response, next: Ne
     }
 
 };
+
+export const getFilesController = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const files = await getFiles();
+        console.log(files);
+        return res.status(200).json(files);
+    } catch (error) {
+        next(error);
+    }
+}

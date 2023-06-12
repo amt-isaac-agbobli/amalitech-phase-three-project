@@ -1,5 +1,4 @@
 import {db} from '../config/db.server';
-import cloudinary from '../config/cloudinary';
 import { File } from '../types/file.type';
 
 export const uploadFile = async (file:File ,adminId : number) => {
@@ -10,8 +9,17 @@ export const uploadFile = async (file:File ,adminId : number) => {
             title,
             description,
             file_path ,
-            adminId 
-            
+            adminId   
         }
     }) ;
-}
+};
+
+export const getFiles = async () => {
+    return await db.file.findMany({
+        select:{
+            id:true,
+            title:true,
+            description:true,
+        }
+    }) ;
+};
