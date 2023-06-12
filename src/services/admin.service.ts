@@ -19,7 +19,8 @@ export const registerAdmin = async (admin: Admin): Promise<AdminRead> => {
          id: true,
          email: true,
          createdAt: true,
-         updatedAt: true
+         updatedAt: true ,
+         role : true
       }
    })
 };
@@ -29,9 +30,11 @@ export const loginAdmin = async (password: string, email: string): Promise<Admin
    const adminExist = await db.admin.findUnique({
       where: { email },
    });
+   console.log(email) ;
    if (!adminExist) throw new Error("Admin Does Not Exist");
    const isMatch = await compareData(password, adminExist.password);
    if (!isMatch) throw new Error("Invalid Credentials");
+   
    return adminExist;
 
 }
@@ -42,7 +45,8 @@ export const getAdmins = async (): Promise<AdminRead[]> => {
          id: true,
          email: true,
          createdAt: true,
-         updatedAt: true
+         updatedAt: true,
+         role: true
       }
    })
 };
@@ -54,7 +58,8 @@ export const getAdmin = async (id: number): Promise<AdminRead> => {
          id: true,
          email: true,
          createdAt: true,
-         updatedAt: true
+         updatedAt: true,
+         role: true
       }
    });
    if (!admin) throw new Error("Admin Does Not Exist");

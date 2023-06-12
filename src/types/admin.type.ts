@@ -8,6 +8,7 @@ type AdminRead = {
     email : string ;
     createdAt : Date ;
     updatedAt : Date
+    role : String ;
 }
 
 

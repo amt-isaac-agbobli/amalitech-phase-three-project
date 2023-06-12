@@ -24,8 +24,8 @@ export const loginAdmin = async (req:Request,res:Response,next:NextFunction) => 
             return res.status(400).json({errors:errors.array()}) ;
         }
         const {email , password} = req.body ;
-        const admin = await AdminService.loginAdmin(email,password) ;
-        const token = await generateToken(admin.id , admin.email)
+        const admin = await AdminService.loginAdmin(password,email) ;
+        const token = await generateToken(admin.id , admin.email ,admin.role.toString())
         return res.status(200).json({
             Token : token
         }) ;

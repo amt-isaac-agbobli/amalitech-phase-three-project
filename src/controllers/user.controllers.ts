@@ -38,7 +38,7 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
         }
         const { email, password } = req.body;
         const user = await userService.userLogin(email, password);
-        const token = await generateToken(user.id, user.email);
+        const token = await generateToken(user.id, user.email , user.role);
         return res.status(200).json({
             Token: token
         });

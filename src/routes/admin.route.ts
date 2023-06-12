@@ -9,7 +9,7 @@ const adminRouter : Router = express.Router();
 
 adminRouter.post('/register', body('email').isEmail(), body('password').isStrongPassword(),
             addminController.registerAdmin); 
-adminRouter.post('/login', body('email').isEmail(), body('password').isString(),addminController.loginAdmin);
+adminRouter.post('/sign-in', body('email').isEmail(), body('password').isString(),addminController.loginAdmin);
 
 adminRouter.get('/' , isLogin, addminController.getAdmins) ;
 

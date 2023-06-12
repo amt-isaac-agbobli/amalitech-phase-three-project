@@ -2,7 +2,9 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import {TokenPayload} from '../interfaces/verification.interface'
+import { getAdmin } from '../services/admin.service';
 import * as dotenv from 'dotenv';
+import { error } from 'console';
 dotenv.config();
 
 export interface CustomRequest extends Request {
@@ -26,3 +28,17 @@ export const isLogin = async (req: Request, res: Response, next: NextFunction) =
     }
 };
 
+export const isAdmin =async (req: Request, res: Response, next: NextFunction) => {
+   try {
+    const admin: any = (req as CustomRequest).token;
+    
+    if(admin.role !== 'ADMIN'){
+        return res.status(401).json({ message: 'You are not admin to upload file' });
+    }
+    next();
+    
+    
+   } catch (error) {
+     throw error
+   }
+}

@@ -13,8 +13,8 @@ export const compareData = async (data: string, hashedData: string) :Promise<boo
     return await bcrypt.compare(data, hashedData);
 };
 
-export const generateToken = async (id: number , email :string) :Promise<string> => {
-    return await jwt.sign({ id , email }, process.env.JWT_SECRET!, {
+export const generateToken = async (id: number , email :string ,role:string) :Promise<string> => {
+    return await jwt.sign({ id , email,role }, process.env.JWT_SECRET!, {
         expiresIn: process.env.JWT_EXPIRE
     });
 };
