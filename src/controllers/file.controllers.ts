@@ -1,36 +1,46 @@
-import { Request , Response ,NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
+import {validationResult} from 'express-validator' ;
 import { uploadFile } from "../services/file.service";
-import cloudinary from '../config/cloudinary' ; 
+import cloudinary from '../config/cloudinary';
 import { CustomRequest } from "../interfaces/verification.interface";
-import { getAdmin } from "../services/admin.service";
+import fs from 'fs';
 
 
-export const uploadFileController = async (req:Request ,res:Response ,next:NextFunction) => {
+
+export const uploadFileController = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const {title,description} = req.body ;
-        //if(!req.file) throw new Error('File not found') ;
-       // const path = req.file.path;
-       const user: any = (req as CustomRequest).token;
-       const id : number = parseInt(user.id) ;
-       
-       if(req.file){
-        /*const result = await cloudinary.uploader.upload(req.file.path, {
-            resource_type: 'auto',
-            folder: 'files',
-          });*/
-          console.log(req.file.path) ; 
-        
-        const file = await uploadFile({
-            title,
-            description,
-            file_path:req.file.path
-        },id) ;
-        res.status(201).json({
-            message:"File uploaded successfully",
-            file
-        }) ;}
+
+        const errors = validationResult(req) ;
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors:errors.array()}) ;  
+        }
+
+        const { title, description } = req.body;
+        const user: any = (req as CustomRequest).token;
+        const id: number = parseInt(user.id);
+
+        if (req.file) {
+            console.log(req.file.path);
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                resource_type: 'auto',
+                folder: 'files',
+            });
+
+            const file = await uploadFile({
+                title,
+                description,
+                file_path: result.secure_url
+            }, id);
+
+            fs.unlinkSync(req.file.path);
+            
+            res.status(201).json({
+                message: "File uploaded successfully",
+                file
+            });
+        }
     } catch (error) {
-        next(error) ;
+        next(error);
     }
-    
+
 };

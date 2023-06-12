@@ -2,9 +2,7 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import {TokenPayload} from '../interfaces/verification.interface'
-import { getAdmin } from '../services/admin.service';
 import * as dotenv from 'dotenv';
-import { error } from 'console';
 dotenv.config();
 
 export interface CustomRequest extends Request {
