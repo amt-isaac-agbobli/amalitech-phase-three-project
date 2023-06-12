@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import {validationResult} from 'express-validator' ;
-import { uploadFile ,getFiles } from "../services/file.service";
+import { uploadFile ,getFiles , getFile } from "../services/file.service";
 import cloudinary from '../config/cloudinary';
 import { CustomRequest } from "../interfaces/verification.interface";
 import fs from 'fs';
@@ -51,6 +51,20 @@ export const getFilesController = async (req: Request, res: Response, next: Next
         const files = await getFiles();
         console.log(files);
         return res.status(200).json(files);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const getFileByIdController = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const errors = validationResult(req) ;
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors:errors.array()}) ;
+        }
+        const id = parseInt(req.params.id);
+        const file = await getFile(id);
+        return res.status(200).json(file);
     } catch (error) {
         next(error);
     }

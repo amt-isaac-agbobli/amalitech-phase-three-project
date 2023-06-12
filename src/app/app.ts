@@ -18,7 +18,7 @@ app.use(express.urlencoded({extended:false}));
 app.use('/api/v1/admins/' , adminRouter) ;
 app.use('/api/v1/users/' , userRouter) ;
 app.use('/api/v1/otp/' , OtpRouter) ;
-app.use('/api/v1/file/' , fileRouter) ;
+app.use('/api/v1/files/' , fileRouter) ;
 
 //Error handling middleware
 app.use(notFound);

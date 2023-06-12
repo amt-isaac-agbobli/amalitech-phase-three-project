@@ -23,3 +23,14 @@ export const getFiles = async () => {
         }
     }) ;
 };
+
+export const getFile = async (id:number) => {
+    return await db.file.findUnique({
+        where:{id},
+        select:{
+            id:true,
+            title:true,
+            description:true,
+        }
+    }) ;
+}
