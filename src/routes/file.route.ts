@@ -15,3 +15,7 @@ fileRouter.get('/', isLogin , fileController.getFilesController);
 export default fileRouter;
 
 fileRouter.get('/:id', isLogin, fileController.getFileByIdController);
+
+fileRouter.get('/download/:id', isLogin, fileController.downloadFileController);
+
+fileRouter.post('/email/:id', isLogin, fileController.sendEmailController);

@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import {validationResult} from 'express-validator' ;
-import { uploadFile ,getFiles , getFile } from "../services/file.service";
+import { uploadFile ,getFiles , getFile , downloadFile, saveDownload, sendEmailToUser } from "../services/file.service";
 import cloudinary from '../config/cloudinary';
 import { CustomRequest } from "../interfaces/verification.interface";
-import fs from 'fs';
+
 
 
 
@@ -21,19 +21,17 @@ export const uploadFileController = async (req: Request, res: Response, next: Ne
         const id: number = parseInt(user.id);
 
         if (req.file) {
-            console.log(req.file.path);
-            const result = await cloudinary.uploader.upload(req.file.path, {
+            
+            /*const result = await cloudinary.uploader.upload(req.file.path, {
                 resource_type: 'auto',
                 folder: 'files',
-            });
+            }); */
 
             const file = await uploadFile({
                 title,
                 description,
-                file_path: result.secure_url
+                file_path: req.file.path,
             }, id);
-
-            fs.unlinkSync(req.file.path);
 
             res.status(201).json({
                 message: "File uploaded successfully",
@@ -48,8 +46,15 @@ export const uploadFileController = async (req: Request, res: Response, next: Ne
 
 export const getFilesController = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const files = await getFiles();
-        console.log(files);
+        const url = `${req.protocol}://${req.get('host')}/api/v1/files/download/` ; ;
+        const files = (await getFiles()).map(file => {
+            return {
+                id: file.id,
+                title: file.title,
+                description: file.description,
+                "Download Url" : url + file.id
+            }});
+    
         return res.status(200).json(files);
     } catch (error) {
         next(error);
@@ -62,10 +67,50 @@ export const getFileByIdController = async (req: Request, res: Response, next: N
         if(!errors.isEmpty()){
             return res.status(400).json({errors:errors.array()}) ;
         }
+        const url = `${req.protocol}://${req.get('host')}/api/v1/files/download/` ;
         const id = parseInt(req.params.id);
         const file = await getFile(id);
-        return res.status(200).json(file);
+        return res.status(200).json({
+            file,
+            "Download URL" : url + id
+        });
     } catch (error) {
         next(error);
     }
-}
+};
+
+export const downloadFileController = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = parseInt(req.params.id);
+        const file = await downloadFile(id);
+        if(!file){
+            return res.status(404).json({
+                message : "File not found"
+            })
+        }
+        const fileUrl = file.file_path;
+        res.download(fileUrl);
+        const user: any = (req as CustomRequest).token;
+        const userId: number = parseInt(user.id);
+        await saveDownload(id, userId);
+    } catch (error) {
+        next(error);
+    }
+} ;
+
+export const sendEmailController = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const user: any = (req as CustomRequest).token;
+        const userId: number = parseInt(user.id);
+        const fileId = parseInt(req.params.id) ;
+        await sendEmailToUser(fileId,userId) ;
+
+            return res.status(200).json({
+                message : "Email sent successfully"
+            }) ;
+        
+
+    } catch (error) {
+        
+    }
+} ;
