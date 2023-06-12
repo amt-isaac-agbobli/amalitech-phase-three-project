@@ -7,8 +7,7 @@ import { isLogin } from "../middleware/verification";
 
 const userRouter: Router = express.Router();
 
-userRouter.post('/sign-up', body("firstName").isString(), body("lastName").isString(),
-    body("email").isEmail(), body("password").isStrongPassword(),
+userRouter.post('/sign-up', body("email").isEmail(), body("password").isStrongPassword(),
     userController.userReigister)
 
 userRouter.post('/sign-in', body("email").isEmail(), body("password").isStrongPassword(),

@@ -89,6 +89,7 @@ export const resetPasswordController = async (req: Request, res: Response, next:
             throw Error("Invalid OTP or emaill");
         }
         const updatedPassword = await resetPassword({ email, password })
+        await deleteOtp(email) ;
         res.status(200).json(updatedPassword);
     } catch (error) {
         next(error)

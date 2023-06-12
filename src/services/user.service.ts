@@ -3,7 +3,7 @@ import { User,UserRead } from '../types/user.types';
 import { hashData ,compareData } from '../utils/helper';
 
 export const userReigister = async (user:User) : Promise<UserRead> =>   {
-    const {firstName , lastName ,email,password } = user ;
+    const {email,password } = user ;
     const userExist = await db.user.findUnique({
         where:{email}
     },) ;
@@ -11,16 +11,12 @@ export const userReigister = async (user:User) : Promise<UserRead> =>   {
         throw new Error('User already exist') ;}
     return await db.user.create({
         data:{
-            firstName , 
-            lastName,
             email, 
             password : await hashData(password)
          
         },
         select:{
             id : true ,
-            firstName : true ,
-            lastName : true ,
             email : true ,
             createdAt : true ,
             updatedAt : true ,
@@ -56,8 +52,6 @@ export const userProfile = async (email:string) :Promise<UserRead | null> => {
         select:{
             email:true,
             id : true,
-            firstName: true,
-            lastName:true,
             createdAt: true ,
             updatedAt: true,
             role: true,

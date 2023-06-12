@@ -10,13 +10,13 @@ datasource db {
 model User {
   id         Int      @id @default(autoincrement())
   email      String   @unique
-  firstName  String
-  lastName   String
   password   String
   role       Role     @default(USER)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   isVarified Boolean  @default(false)
+  download Download []
+  emails    Email[]
 }
 
 model Admin {
@@ -26,6 +26,7 @@ model Admin {
   role      Role     @default(ADMIN)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  file  File[]
 }
 
 model Otp{
@@ -33,6 +34,37 @@ model Otp{
   otp       String
   createdAt DateTime @default(now())
   expiredAt DateTime 
+}
+
+
+model File {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  file_path   String
+  upload_date DateTime @default(now())
+  admin       Admin     @relation(fields: [adminId], references: [id])
+  adminId     Int
+  downloads   Download[]
+  emails      Email[]
+}
+
+model Download {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+  file        File     @relation(fields: [fileId], references: [id])
+  fileId      Int
+  download_date DateTime @default(now())
+}
+
+model Email {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  file      File     @relation(fields: [fileId], references: [id])
+  fileId    Int
+  sent_date DateTime @default(now())
 }
 
 enum Role {
