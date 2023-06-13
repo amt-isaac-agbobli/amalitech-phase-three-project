@@ -4,7 +4,6 @@ import morgan from 'morgan';
 import { errorHandler, notFound } from '../middleware/globaErrorHandler';
 import adminRouter from '../routes/admin.route';
 import userRouter from '../routes/user.route';
-import OtpRouter from '../routes/otp.route';
 import fileRouter from '../routes/file.route';
 
 
@@ -17,7 +16,6 @@ app.use(express.urlencoded({extended:false}));
 //Routes
 app.use('/api/v1/admins/' , adminRouter) ;
 app.use('/api/v1/users/' , userRouter) ;
-app.use('/api/v1/otp/' , OtpRouter) ;
 app.use('/api/v1/files/' , fileRouter) ;
 
 //Error handling middleware

@@ -20,14 +20,14 @@ export const deleteOtp = async (email: string) => {
     }
 };
 
-const registerOtp = async (otpBody: Otp, duration: number) => {
+const registerOtp = async (otpBody: Otp) => {
     try {
         const { email, otpHash } = otpBody;
         await db.otp.create({
             data: {
                 email,
                 otp: otpHash,
-                expiredAt: new Date(Date.now() + 30 * 60000 * + duration)
+                expiredAt: new Date(Date.now() + 60 * 60000 )
             }
         });
     } catch (error) {
@@ -64,7 +64,7 @@ export const sendOtp = async (body: OtpOption) => {
 
         await sendEmail(mailOption);
         await deleteOtp(email);
-        await registerOtp({ email, otpHash }, duration)
+        await registerOtp({ email, otpHash })
         return { message: "Otp sent successfully" };
 
     } catch (error) {
