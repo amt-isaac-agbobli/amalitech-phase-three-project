@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
-import { deleteOtp, resetPassword, sendOtp, sendVerificationEmail, verifyOtp, verifyUser } from '../services/otp.service';
+import { deleteOtp, resetPassword, sendOtp, sendVerificationEmail,sendComfirmationEmail, 
+         verifyOtp, verifyUser } from '../services/otp.service';
 
 export const sendOtpController = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -50,6 +51,14 @@ export const verifyEmailController = async (req: Request, res: Response, next: N
             await verifyUser(email);
             await deleteOtp(email);
         }
+        const mailOption = {
+            from : "File Server App",
+            to : email,
+            subject : "Email Comfirmation",
+            html: `<h1> Your email has been verified </h1> <br> <p> You can now login to your account </p>`
+        } ;
+        await sendComfirmationEmail(email, mailOption);
+
         res.status(200).json({ valid: validOtp })
     } catch (error) {
         next(error);
@@ -90,6 +99,15 @@ export const resetPasswordController = async (req: Request, res: Response, next:
         }
         const updatedPassword = await resetPassword({ email, password })
         await deleteOtp(email) ;
+
+        const mailOption = {
+            from : "File Server App",
+            to : email,
+            subject : "Reset Password",
+            html: `<h1> Your password has been reset </h1> <br> <p> You can now login to your account </p>`
+        } ;
+        await sendComfirmationEmail(email, mailOption);
+
         res.status(200).json(updatedPassword);
     } catch (error) {
         next(error)

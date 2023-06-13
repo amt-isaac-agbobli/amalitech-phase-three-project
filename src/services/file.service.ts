@@ -2,7 +2,6 @@ import { db } from '../config/db.server';
 import { File } from '../types/file.type';
 import { sendEmail } from '../utils/send.email';
 
-import { transporter } from "../config/nodemailer.transporter";
 
 export const uploadFile = async (file: File, adminId: number) => {
     const { title, description, file_path } = file;
@@ -76,7 +75,8 @@ export const sendEmailToUser = async (fileId: number, userId: number) => {
             from: 'File Sharing App',
             to: email,
             subject: 'File Shared',
-            text: `File Title : ${title} \n File Description : ${description} \n File Path : ${file_path}`,
+            html: `<h1>${title}</h1><br><p>${description}</p>
+                    <p><br>Atttached is the file you requested<br><br>Regards<br>File Sharing App</p>`,
             attachments: [
                 {
                     filename,
@@ -86,9 +86,6 @@ export const sendEmailToUser = async (fileId: number, userId: number) => {
         };
 
         sendEmail(mailOptions);
-
-
-
     } catch (error) {
         throw error;
     }
@@ -106,7 +103,6 @@ export const saveEmail = async (fileId: number, userId: number) => {
 
 export const getFileStats = async () => {
     try {
-
         const files = await db.file.findMany({
             select: {
                 id: true,
@@ -123,12 +119,11 @@ export const getFileStats = async () => {
                 },
             },
         });
-
         const fileStats = files.map((file) => ({
-            id: file.id,
-            title: file.title,
-            numberOfEmails: file.emails.length,
-            numberOfDownloads: file.downloads.length,
+            Id: file.id,
+            Title: file.title,
+            "Number Of Emails": file.emails.length,
+            "Number Of Downloads": file.downloads.length,
         }));
         return fileStats;
     } catch (error) {

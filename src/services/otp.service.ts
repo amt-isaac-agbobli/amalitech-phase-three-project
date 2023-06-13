@@ -4,6 +4,7 @@ import { sendEmail } from '../utils/send.email';
 import { compareData, hashData } from '../utils/helper';
 import { Otp, OtpOption, OtpVarifiedOption, ResetPasswordOption } from '../types/otp.type'
 import * as dotenv from 'dotenv';
+import { mailOption } from '../types/mailOption.type';
 dotenv.config();
 
 export const deleteOtp = async (email: string) => {
@@ -84,6 +85,20 @@ export const sendVerificationEmail = async (email: string, otpDetails: OtpOption
         throw error
     }
 };
+
+export const sendComfirmationEmail = async (email: string, mailOption: mailOption) => {
+    try {
+        const userExit = await db.user.findUnique({ where: { email } });
+        if (!userExit) {
+            throw Error("There's no account for provide email. ");
+        }
+        const message = sendEmail(mailOption);
+        return message; 
+    } catch (error) {
+        throw error
+    }
+};
+
 
 export const verifyOtp = async (otpVerifiedOption: OtpVarifiedOption) => {
     try {
