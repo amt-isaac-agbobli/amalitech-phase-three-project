@@ -4,6 +4,11 @@ import {validationResult} from 'express-validator' ;
 import { CustomRequest } from '../middleware/authorization';
 import { generateToken } from '../utils/helper';
 
+/**
+ * @desc Controller for Admin Registration
+ * @access Public
+ * @route POST /api/v1/admins/sign-up 
+ * */ 
 export const registerAdmin = async (req:Request,res:Response,next:NextFunction) => {
     try {
         const errors = validationResult(req) ;
@@ -16,7 +21,11 @@ export const registerAdmin = async (req:Request,res:Response,next:NextFunction) 
         next(error) ;
     }
 } ;
-
+/**
+ * @desc Controller for Admin Sign in
+ * @access Public
+ * @route POST /api/v1/admins/sign-in
+ * */ 
 export const loginAdmin = async (req:Request,res:Response,next:NextFunction) => {
     try {
         const errors = validationResult(req) ;
