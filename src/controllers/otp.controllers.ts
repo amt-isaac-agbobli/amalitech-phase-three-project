@@ -1,23 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
-import { deleteOtp, resetPassword, sendOtp, sendVerificationEmail,sendComfirmationEmail, 
+import { deleteOtp, resetPassword, sendVerificationEmail,sendComfirmationEmail, 
          verifyOtp, verifyUser } from '../services/otp.service';
 
-export const sendOtpController = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const errors = validationResult(req);
-        if (!errors.isEmpty) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-        const { email, subject, message, duration } = req.body;
-        const otp = await sendOtp({ email, subject, message, duration });
-        return res.status(200).json(otp);
-
-    } catch (error) {
-        next(error);
-    }
-};
-
+/**
+ * @desc Controller for requsting of OTP
+ * @access Public
+ * @route POST /api/v1/users/request-otp  
+ * */        
 export const requestOtpController = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const errors = validationResult(req);
@@ -39,6 +29,11 @@ export const requestOtpController = async (req: Request, res: Response, next: Ne
     }
 };
 
+/**
+ * @desc Controller for Email Verification
+ * @access Public
+ * @route POST /api/v1/users/verify  
+ * */  
 export const verifyEmailController = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const errors = validationResult(req);
@@ -65,6 +60,11 @@ export const verifyEmailController = async (req: Request, res: Response, next: N
     }
 };
 
+/**
+ * @desc Controller for forget password
+ * @access Public
+ * @route POST /api/v1/users/forget-password 
+ * */  
 export const forgetPasswordOtpController = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const errors = validationResult(req);
@@ -86,6 +86,11 @@ export const forgetPasswordOtpController = async (req: Request, res: Response, n
     }
 };
 
+/**
+ * @desc Controller for password reset
+ * @access Public
+ * @route POST /api/v1/users/reset-password  
+ * */  
 export const resetPasswordController = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const errors = validationResult(req);
@@ -112,4 +117,4 @@ export const resetPasswordController = async (req: Request, res: Response, next:
     } catch (error) {
         next(error)
     }
-}
+};

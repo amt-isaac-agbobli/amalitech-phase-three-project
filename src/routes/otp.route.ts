@@ -2,7 +2,7 @@ import express from 'express';
 import { Router } from 'express';
 import { body } from 'express-validator';
 import {
-    sendOtpController, requestOtpController,
+     requestOtpController,
     verifyEmailController, forgetPasswordOtpController,
     resetPasswordController
 } from '../controllers/otp.controllers'
@@ -12,8 +12,7 @@ import {getFileStatsController} from '../controllers/file.controllers'
 const OtpRouter: Router = express.Router();
 
 
-OtpRouter.post('/send-otp', body("email").isEmail(), body("subject").isString(),
-          body("message").isString(), sendOtpController);
+
 
 OtpRouter.post("/request-otp", body("email").isEmail(), requestOtpController) ;
 
