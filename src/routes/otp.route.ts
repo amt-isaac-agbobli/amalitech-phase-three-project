@@ -7,6 +7,8 @@ import {
     resetPasswordController
 } from '../controllers/otp.controllers'
 
+import {getFileStatsController} from '../controllers/file.controllers'
+
 const OtpRouter: Router = express.Router();
 
 
@@ -21,6 +23,8 @@ OtpRouter.post('/user/forget-password', body("email").isEmail(), forgetPasswordO
 
 OtpRouter.post('/user/reset-password', body("email").isEmail(), body("opt"),
     body("password").isStrongPassword(), resetPasswordController) ;
+
+OtpRouter.get('/file', getFileStatsController) ;
 
 
 

@@ -1,7 +1,7 @@
 
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import {TokenPayload} from '../interfaces/verification.interface'
+import {TokenPayload} from '../interfaces/auth.interfaces'
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -31,7 +31,7 @@ export const isAdmin =async (req: Request, res: Response, next: NextFunction) =>
     const admin: any = (req as CustomRequest).token;
     
     if(admin.role !== 'ADMIN'){
-        return res.status(401).json({ message: 'You are not admin to upload file' });
+        return res.status(401).json({ message: 'You are not admin to access this route' });
     }
     next();
     

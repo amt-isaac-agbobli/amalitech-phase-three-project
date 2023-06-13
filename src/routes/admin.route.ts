@@ -1,8 +1,8 @@
 import { Router } from "express";
 import express  from 'express';
 import { body } from "express-validator";
-import * as  addminController from '../controllers/admin.controller' ;
-import {isLogin} from '../middleware/verification' ;
+import * as  addminController from '../controllers/admin.controllers' ;
+import {isLogin} from '../middleware/authorization' ;
 
 const adminRouter : Router = express.Router();
 

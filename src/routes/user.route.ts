@@ -3,7 +3,7 @@ import express from "express";
 import * as userController from '../controllers/user.controllers';
 import * as otpController from '../controllers/otp.controllers'
 import { body } from 'express-validator';
-import { isLogin } from "../middleware/verification";
+import { isLogin } from "../middleware/authorization";
 
 const userRouter: Router = express.Router();
 

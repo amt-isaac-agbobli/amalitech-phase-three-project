@@ -3,7 +3,7 @@ import { validationResult } from "express-validator";
 import * as userService from '../services/user.service';
 import {sendVerificationEmail} from '../services/otp.service'
 import { generateToken } from "../utils/helper";
-import { CustomRequest } from '../interfaces/verification.interface';
+import { CustomRequest } from '../interfaces/auth.interfaces';
 
 export const userReigister = async (req: Request, res: Response, next: NextFunction) => {
     try {

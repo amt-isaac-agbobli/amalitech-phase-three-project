@@ -1,7 +1,7 @@
 import {Request,Response,NextFunction} from 'express' ;
 import * as AdminService from '../services/admin.service' ;
 import {validationResult} from 'express-validator' ;
-import { CustomRequest } from '../middleware/verification';
+import { CustomRequest } from '../middleware/authorization';
 import { generateToken } from '../utils/helper';
 
 export const registerAdmin = async (req:Request,res:Response,next:NextFunction) => {
