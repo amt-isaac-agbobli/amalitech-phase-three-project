@@ -5,6 +5,11 @@ import {sendVerificationEmail} from '../services/otp.service'
 import { generateToken } from "../utils/helper";
 import { CustomRequest } from '../interfaces/auth.interfaces';
 
+/**
+ * @desc Controller for User Registration
+ * @access Public
+ * @route POST /api/v1/users/sign-up 
+ * */  
 export const userReigister = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const errors = validationResult(req);
@@ -29,7 +34,11 @@ export const userReigister = async (req: Request, res: Response, next: NextFunct
         next(error)
     }
 };
-
+/**
+ * @desc Controller for User Sign up 
+ * @access Public
+ * @route POST /api/v1/users/sign-up  
+ * */  
 export const userLogin = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const errors = validationResult(req);
@@ -47,6 +56,11 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
     }
 };
 
+/**
+ * @desc Controller for User Profile
+ * @access Private
+ * @route POST /api/v1/users/profile 
+ * */  
 export const userProfile = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user: any = (req as CustomRequest).token;
