@@ -4,10 +4,11 @@ import { uploadFile, getFiles, getFile, downloadFile, saveDownload, sendEmailToU
 import cloudinary from '../config/cloudinary';
 import { CustomRequest } from "../interfaces/auth.interfaces";
 
-
-
-
-
+/**
+ * @desc Controller for File Uploading
+ * @access Private
+ * @route POST /api/v1/files/upload
+ * */ 
 export const uploadFileController = async (req: Request, res: Response, next: NextFunction) => {
     try {
 
@@ -44,6 +45,11 @@ export const uploadFileController = async (req: Request, res: Response, next: Ne
 
 };
 
+/**
+ * @desc Controller for for Displaying Files
+ * @access Private
+ * @route GET /api/v1/files 
+ * */ 
 export const getFilesController = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const url = `${req.protocol}://${req.get('host')}/api/v1/files/download/`;;
@@ -61,7 +67,11 @@ export const getFilesController = async (req: Request, res: Response, next: Next
         next(error);
     }
 };
-
+/**
+ * @desc Controller for for Displaying File by ID
+ * @access Private
+ * @route GET /api/v1/files 
+ * */ 
 export const getFileByIdController = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const errors = validationResult(req);
@@ -80,6 +90,11 @@ export const getFileByIdController = async (req: Request, res: Response, next: N
     }
 };
 
+/**
+ * @desc Controller for for Downloading File
+ * @access Private
+ * @route GET /api/v1/files/download/:id 
+ * */ 
 export const downloadFileController = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = parseInt(req.params.id);
@@ -98,7 +113,11 @@ export const downloadFileController = async (req: Request, res: Response, next: 
         next(error);
     }
 };
-
+/**
+ * @desc Controller for Sending File through Email
+ * @access Private
+ * @route POST /api/v1/files/email/:id 
+ * */ 
 export const sendEmailController = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user: any = (req as CustomRequest).token;
@@ -117,7 +136,11 @@ export const sendEmailController = async (req: Request, res: Response, next: Nex
         next(error)
     }
 };
-
+/**
+ * @desc Controller for Geting Statistics on download and email sent of files
+ * @access Private
+ * @route GET /api/v1/files/stats 
+ * */ 
 export const getFileStatsController = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const fileStats = await getFileStats();
