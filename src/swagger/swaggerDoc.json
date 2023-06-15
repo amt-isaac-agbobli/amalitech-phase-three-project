@@ -25,7 +25,7 @@
       "/users/sign-in": {
         "post": {
           "summary": "Login to the application",
-          "tags": ["Authentication"],
+          "tags": ["User Authentication"],
           "requestBody": {
             "required": true,
             "content": {
@@ -60,7 +60,7 @@
       "/users/sign-up": {
         "post": {
           "summary": "Sign up for the application",
-          "tags": ["Authentication"],
+          "tags": ["User Authentication"],
           "requestBody": {
             "required": true,
             "content": {
@@ -95,7 +95,7 @@
       "/users/request-otp": {
         "post": {
           "summary": "Request OTP for the application",
-          "tags": ["Authentication"],
+          "tags": ["User Authentication"],
           "requestBody": {
             "required": true,
             "content": {
@@ -126,7 +126,7 @@
       "/users/verify": {
         "post": {
           "summary": "User Verification for the application",
-          "tags": ["Authentication"],
+          "tags": ["User Authentication"],
           "requestBody": {
             "required": true,
             "content": {
@@ -161,7 +161,7 @@
       "/users/forget-password": {
         "post": {
           "summary": "Forget Password for the application",
-          "tags": ["Authentication"],
+          "tags": ["User Authentication"],
           "requestBody": {
             "required": true,
             "content": {
@@ -192,7 +192,7 @@
       "/users/reset-password": {
         "post": {
           "summary": "Reset Password to the application",
-          "tags": ["Authentication"],
+          "tags": ["User Authentication"],
           "requestBody": {
             "required": true,
             "content": {
@@ -224,6 +224,41 @@
             },
             "400": {
               "description": "Invalid email or otp"
+            }
+          }
+        }
+      },
+      "/admins/sign-in": {
+        "post": {
+          "summary": "Login to the application",
+          "tags": ["Admin Authentication"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password"
+                    }
+                  },
+                  "required": ["email", "password"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successfully logged in"
+            },
+            "400": {
+              "description": "Invalid email or password"
             }
           }
         }
