@@ -1,0 +1,233 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "File Server API",
+      "version": "1.0.0",
+      "description": "Documentation for the File Server API",
+        "contact": {
+            "name": "File Server API",
+            "url": "http://localhost:8000/api/v1/",
+            "email": "isaac.agbobli@amalitech.org" ,
+            "phone": "+233 24 123 4567"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api/v1/",
+            "description": "Development server"
+        }
+    ],
+    "paths": {
+      "/users/sign-in": {
+        "post": {
+          "summary": "Login to the application",
+          "tags": ["Authentication"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password"
+                    }
+                  },
+                  "required": ["email", "password"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successfully logged in"
+            },
+            "400": {
+              "description": "Invalid email or password"
+            }
+          }
+        }
+      },
+      "/users/sign-up": {
+        "post": {
+          "summary": "Sign up for the application",
+          "tags": ["Authentication"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password"
+                    }
+                  },
+                  "required": ["email", "password"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Successfully signed up"
+            },
+            "400": {
+              "description": "Invalid email or password"
+            }
+          }
+        }
+      },
+      "/users/request-otp": {
+        "post": {
+          "summary": "Request OTP for the application",
+          "tags": ["Authentication"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    }
+                  },
+                  "required": ["email"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Successfully requested OTP"
+            },
+            "400": {
+              "description": "Invalid email"
+            }
+          }
+        }
+      },
+      "/users/verify": {
+        "post": {
+          "summary": "User Verification for the application",
+          "tags": ["Authentication"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "otp": {
+                      "type": "string",
+                      "format": "otp"
+                    }
+                  },
+                  "required": ["email", "otp"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successfully verified user"
+            },
+            "400": {
+              "description": "Invalid email or otp"
+            }
+          }
+        }
+      },
+      "/users/forget-password": {
+        "post": {
+          "summary": "Forget Password for the application",
+          "tags": ["Authentication"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    }
+                  },
+                  "required": ["email"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Check your email for a OTP to reset your password"
+            },
+            "400": {
+              "description": "Invalid email"
+            }
+          }
+        }
+      },
+      "/users/reset-password": {
+        "post": {
+          "summary": "Reset Password to the application",
+          "tags": ["Authentication"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password"
+                    },
+                    "otp": {
+                        "type": "string",
+                        "format": "otp"
+                      }
+                  },
+                  "required": ["email", "password" , "otp"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Your password has been reset successfully"
+            },
+            "400": {
+              "description": "Invalid email or otp"
+            }
+          }
+        }
+      }
+    }
+  }
+  
