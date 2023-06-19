@@ -1,7 +1,7 @@
 
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import {TokenPayload} from '../interfaces/auth.interfaces'
+import { TokenPayload } from '../interfaces/auth.interfaces'
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -10,11 +10,13 @@ export interface CustomRequest extends Request {
 }
 
 export const isLogin = async (req: Request, res: Response, next: NextFunction) => {
+
+    console.log(req.headers);
     const authHeader = req.headers.authorization;
+
     if (!authHeader) {
         return res.status(401).json({ message: 'Authorization header is missing' });
     }
-
     const token = authHeader.split(' ')[1];
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET!) as TokenPayload;
@@ -26,17 +28,17 @@ export const isLogin = async (req: Request, res: Response, next: NextFunction) =
     }
 };
 
-export const isAdmin =async (req: Request, res: Response, next: NextFunction) => {
-   try {
-    const admin: any = (req as CustomRequest).token;
-    
-    if(admin.role !== 'ADMIN'){
-        return res.status(401).json({ message: 'You are not admin to access this route' });
+export const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const admin: any = (req as CustomRequest).token;
+
+        if (admin.role !== 'ADMIN') {
+            return res.status(401).json({ message: 'You are not admin to access this route' });
+        }
+        next();
+
+
+    } catch (error) {
+        throw error
     }
-    next();
-    
-    
-   } catch (error) {
-     throw error
-   }
 }

@@ -52,7 +52,8 @@ export const uploadFileController = async (req: Request, res: Response, next: Ne
  * */ 
 export const getFilesController = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const url = `${req.protocol}://${req.get('host')}/api/v1/files/download/`;;
+        const url = `${req.protocol}://${req.get('host')}/api/v1/files/download/`;
+        req.headers.authorization = "Beara yufsjkld;lkjhj";
         const files = (await getFiles()).map(file => {
             return {
                 id: file.id,

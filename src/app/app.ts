@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { Application,Request ,Response, NextFunction } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import { errorHandler, notFound } from '../middleware/globaErrorHandler';
@@ -12,6 +12,21 @@ import * as swaggerDoc from '../swagger/swaggerDoc.json'
 
 
 const app: Application = express();
+
+const corsOption = {
+   allowedHeaders:['Content-Type' , 'Authorization']
+}
+/*
+app.use((req:Request,res:Response,next:NextFunction) =>{
+    res.header("Access-Control-Allow-origin", "*");
+    res.header("Access-control-allow-headers", "*") ;
+    console.log(req.headers);
+    if(req.method === "OPTION"){
+        res.header("Access-control-allow-methods", "*");
+        return res.status(200).json({}) ;
+    }
+    next();
+}) */
 
 app.use(morgan('dev'));
 app.use(cors());

@@ -8,7 +8,7 @@ import { isLogin } from "../middleware/authorization";
 const userRouter: Router = express.Router();
 
 /**
- * 
+ * @swagger
  *
  * /users/sign-up:
  *   post:
@@ -45,7 +45,7 @@ userRouter.post('/sign-up', body("email").isEmail(), body("password").isStrongPa
 
 /**
  * 
- *
+ *@swagger
  * /users/sign-in:
  *   post:
  *     summary: Login as a user
@@ -101,6 +101,8 @@ userRouter.post('/forget-password', body("email").isEmail(), otpController.forge
 userRouter.post('/reset-password', body("email").isEmail(), body("opt"),
     body("password").isStrongPassword(), otpController.resetPasswordController);
    
-
+userRouter.get("/hello" ,(req , res)=>{
+   res.send(req.headers.authorization);
+})
 
 export default userRouter;
