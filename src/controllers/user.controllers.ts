@@ -27,8 +27,7 @@ export const userReigister = async (req: Request, res: Response, next: NextFunct
         
         await sendVerificationEmail(newUser.email , otpDetails);
         return res.status(201).json({
-            Message : "Check your email to verified your account" ,
-            newUser
+            Message : "User account was created successful check your email to verify your account"
         });
     } catch (error) {
         next(error)
