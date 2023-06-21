@@ -43,16 +43,6 @@ export const loginAdmin = async (req:Request,res:Response,next:NextFunction) => 
     }
 };
 
-export const getAdmins = async (req:Request,res:Response,next:NextFunction) => {
-    try {
-        const admins = await AdminService.getAdmins() ;
-        const admin = (req as CustomRequest).token
-        console.log(admin) ;
-        return res.status(200).json({admins}) ;
-    } catch (error) {
-        next(error) ;
-    }
-} ;
 
 export const getAdmin = async (req:Request,res:Response,next:NextFunction) => {
     try {
@@ -63,11 +53,3 @@ export const getAdmin = async (req:Request,res:Response,next:NextFunction) => {
     }
 };
 
-export const deleteAdmin = async (req:Request,res:Response,next:NextFunction) => {
-    try {
-        const admin = await AdminService.deleteAdmin(Number(req.params.id)) ;
-        return res.status(200).json({admin}) ;
-    } catch (error) {
-        next(error) ;
-    }
-} ;

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { validationResult } from 'express-validator';
-import { uploadFile, getFiles, getFile, downloadFile, saveDownload, sendEmailToUser, saveEmail , getFileStats } from "../services/file.service";
+import * as fileServices from "../services/file.service";
 import cloudinary from '../config/cloudinary';
 import { CustomRequest } from "../interfaces/auth.interfaces";
 
@@ -28,7 +28,7 @@ export const uploadFileController = async (req: Request, res: Response, next: Ne
                 folder: 'files',
             }); */
 
-            const file = await uploadFile({
+            const file = await fileServices.uploadFile({
                 title,
                 description,
                 file_path: req.file.path,
@@ -53,8 +53,7 @@ export const uploadFileController = async (req: Request, res: Response, next: Ne
 export const getFilesController = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const url = `${req.protocol}://${req.get('host')}/api/v1/files/download/`;
-        req.headers.authorization = "Beara yufsjkld;lkjhj";
-        const files = (await getFiles()).map(file => {
+        const files = (await fileServices.getFiles()).map(file => {
             return {
                 id: file.id,
                 title: file.title,
@@ -81,7 +80,7 @@ export const getFileByIdController = async (req: Request, res: Response, next: N
         }
         const url = `${req.protocol}://${req.get('host')}/api/v1/files/download/`;
         const id = parseInt(req.params.id);
-        const file = await getFile(id);
+        const file = await fileServices.getFile(id);
         return res.status(200).json({
             file,
             "Download URL": url + id
@@ -99,7 +98,7 @@ export const getFileByIdController = async (req: Request, res: Response, next: N
 export const downloadFileController = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = parseInt(req.params.id);
-        const file = await downloadFile(id);
+        const file = await fileServices.downloadFile(id);
         if (!file) {
             return res.status(404).json({
                 message: "File not found"
@@ -109,7 +108,7 @@ export const downloadFileController = async (req: Request, res: Response, next: 
         res.download(fileUrl);
         const user: any = (req as CustomRequest).token;
         const userId: number = parseInt(user.id);
-        await saveDownload(id, userId);
+        await fileServices.saveDownload(id, userId);
     } catch (error) {
         next(error);
     }
@@ -126,8 +125,8 @@ export const sendEmailController = async (req: Request, res: Response, next: Nex
         const userId: number = parseInt(user.id);
         const fileId = parseInt(req.params.id);
 
-        await sendEmailToUser(fileId, userId);
-        await saveEmail(fileId, userId);
+        await fileServices.sendEmailToUser(fileId, userId);
+        await fileServices.saveEmail(fileId, userId);
 
         return res.status(200).json({
             message: "Email sent successfully"
@@ -144,9 +143,24 @@ export const sendEmailController = async (req: Request, res: Response, next: Nex
  * */ 
 export const getFileStatsController = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const fileStats = await getFileStats();
+        const fileStats = await fileServices.getFileStats();
         return res.status(200).json(fileStats);
     }catch(error){
         next(error);
     }
 };
+
+/**
+ * @desc Controller for Geting Statistics on download and email sent of file
+ * @access Private
+ * @route GET /api/v1/files/stats/:id
+ */
+export const getFileStatsByIdController = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = parseInt(req.params.id);
+        const fileStats = await fileServices.getFileStatsById(id);
+        return res.status(200).json(fileStats);
+    }catch(error){
+        next(error);
+    }
+} ;

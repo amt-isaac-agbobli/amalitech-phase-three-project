@@ -3,9 +3,9 @@ import { File } from '../types/file.type';
 import { sendEmail } from '../utils/send.email';
 
 
+
 export const uploadFile = async (file: File, adminId: number) => {
     const { title, description, file_path } = file;
-
     return await db.file.create({
         data: {
             title,
@@ -48,7 +48,6 @@ export const downloadFile = async (id: number) => {
         }
     });
 };
-
 
 export const saveDownload = async (fileId: number, userId: number) => {
     return await db.download.create({
@@ -130,3 +129,35 @@ export const getFileStats = async () => {
         throw error;
     }
 };
+
+export const getFileStatsById = async (id: number) => {
+    try {
+        const file = await db.file.findUnique({
+            where: { id },
+            select: {
+                id: true,
+                title: true,
+                emails: {
+                    select: {
+                        id: true,
+                    },
+                },
+                downloads: {
+                    select: {
+                        id: true,
+                    },
+                },
+            },
+        });
+        if (!file) throw new Error("File Not Found");
+        const fileStats  = {
+            Id: file.id,
+            Title: file.title,
+            "Number Of Emails": file.emails.length,
+            "Number Of Downloads": file.downloads.length,
+        };
+        return fileStats;
+    } catch (error) {
+        throw error;
+    }
+}
