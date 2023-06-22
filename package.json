@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": "nodemon src/server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "jest"
   },
   "author": "Agbobli Isaac",
   "license": "ISC",
