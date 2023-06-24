@@ -1,3 +1,4 @@
+import { error } from 'console';
 import { db } from '../config/db.server';
 import { File } from '../types/file.type';
 import { sendEmail } from '../utils/send.email';
@@ -27,7 +28,7 @@ export const getFiles = async () => {
 };
 
 export const getFile = async (id: number) => {
-    return await db.file.findUnique({
+    const file = await db.file.findUnique({
         where: { id },
         select: {
             id: true,
@@ -35,10 +36,14 @@ export const getFile = async (id: number) => {
             description: true,
         }
     });
+    if(!file){
+        throw new Error('File Does Not Exist')
+    }
+    return file ;
 };
 
 export const downloadFile = async (id: number) => {
-    return await db.file.findUnique({
+    const file = await db.file.findUnique({
         where: { id },
         select: {
             id: true,
@@ -47,6 +52,10 @@ export const downloadFile = async (id: number) => {
             file_path: true
         }
     });
+    if(!file){
+        throw new Error('File Does Not Exist')
+    }
+    return file ;
 };
 
 export const saveDownload = async (fileId: number, userId: number) => {

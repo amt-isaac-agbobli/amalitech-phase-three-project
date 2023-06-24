@@ -81,6 +81,7 @@ export const getFileByIdController = async (req: Request, res: Response, next: N
         const url = `${req.protocol}://${req.get('host')}/api/v1/files/download/`;
         const id = parseInt(req.params.id);
         const file = await fileServices.getFile(id);
+        
         return res.status(200).json({
             file,
             "Download URL": url + id

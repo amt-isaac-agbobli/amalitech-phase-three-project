@@ -4,13 +4,11 @@ import { isLogin, isAdmin } from '../middleware/authorization';
 import upload from '../config/multer';
 import { body } from 'express-validator';
 
-import {getFileStatsController} from '../controllers/file.controllers'
-
 
 
 const fileRouter = express.Router();
 //Admin Route
-fileRouter.get('/stats', isLogin, isAdmin , getFileStatsController);
+fileRouter.get('/stats', isLogin, isAdmin , fileController.getFileStatsController);
 
 fileRouter.get('/stats/:id', isLogin, isAdmin , fileController.getFileStatsByIdController);
 
