@@ -33,6 +33,12 @@ export const loginAdmin = async (req:Request,res:Response,next:NextFunction) => 
             return res.status(400).json({errors:errors.array()}) ;
         }
         const {email , password} = req.body ;
+        if(!email){
+            return res.status(400).json({message:'Email is required'}) ;
+        }
+        if(!password){
+            return res.status(400).json({message:'Password is required'}) ;
+        }
         const admin = await AdminService.loginAdmin(password,email) ;
         const token = await generateToken(admin.id , admin.email ,admin.role.toString())
         return res.status(200).json({
