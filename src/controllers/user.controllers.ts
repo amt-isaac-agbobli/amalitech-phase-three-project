@@ -16,6 +16,17 @@ export const userReigister = async (req: Request, res: Response, next: NextFunct
         if (!errors.isEmpty) {
             return res.status(400).json({ errors: errors.array() });
         }
+        const { email, password } = req.body;
+        if(!password){
+            return res.status(400).json({
+                message : "Password is required"
+            });
+        }  
+        if(!email){
+            return res.status(400).json({
+                message : "Email is required"
+            });
+        }  
         const newUser = await userService.userReigister(req.body);
 
         const otpDetails = {
@@ -45,6 +56,15 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
             return res.status(400).json({ errors: errors.array() });
         }
         const { email, password } = req.body;
+        if(!password){
+            return res.status(400).json({
+                message: "Password is required"});
+        }
+        if(!email){
+            return res.status(400).json({
+                message: "Email is required"});
+        }
+        
         const user = await userService.userLogin(email, password);
         const token = await generateToken(user.id, user.email , user.role);
         return res.status(200).json({
