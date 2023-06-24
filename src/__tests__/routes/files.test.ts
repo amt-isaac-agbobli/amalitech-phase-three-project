@@ -23,56 +23,98 @@ describe('Files Routes', () => {
     });
 
     it('Get File by ID', async () => {
-         const response = await request(app)
-             .get('/api/v1/files/2')
-             .set('Authorization', `Bearer ${token}`);
-         expect(response.statusCode).toEqual(200);
-         expect(response.body).toHaveProperty('file');
-         
-    });
- 
-     it('Get File by ID with wrong ID', async () => {
-         const response = await request(app)
-             .get('/api/v1/files/100')
-             .set('Authorization', `Bearer ${token}`);
-         expect(response.statusCode).toEqual(500);
-         expect(response.body.message).toEqual('File Does Not Exist');
-     });
- 
-     it('Download File by ID', async () => {
-         const response = await request(app)
-             .get('/api/v1/files/download/2')
-             .set('Authorization', `Bearer ${token}`);
-         expect(response.statusCode).toEqual(200);
-        // expect(response.body).toHaveProperty('file');
-     });
- 
-     it('Download File by ID with wrong ID', async () => {
-         const response = await request(app)
-             .get('/api/v1/files/download/100')
-             .set('Authorization', `Bearer ${token}`);
-         expect(response.statusCode).toEqual(500);
-         expect(response.body.message).toEqual('File Does Not Exist');
-     }); 
-     
-     it('Display Statstic of the file', async () =>{
         const response = await request(app)
-             .get('/api/v1/files/stats')
-             .set('Authorization' ,`Bearer ${token}`);
-            expect(response.statusCode).toEqual(200);
-            expect(response.body).toEqual(
-                expect.arrayContaining(
-                    [
-                        expect.objectContaining({
-                            Id : expect.any(Number),
-                            Title : expect.any(String),
-                            'Number Of Downloads' : expect.any(Number),
-                            'Number Of Emails' : expect.any(Number),
-                        })
-                    ]
-                )
+            .get('/api/v1/files/2')
+            .set('Authorization', `Bearer ${token}`);
+        expect(response.statusCode).toEqual(200);
+        expect(response.body).toHaveProperty('file');
+
+    });
+
+    it('Get File by ID with wrong ID', async () => {
+        const response = await request(app)
+            .get('/api/v1/files/100')
+            .set('Authorization', `Bearer ${token}`);
+        expect(response.statusCode).toEqual(500);
+        expect(response.body.message).toEqual('File Does Not Exist');
+    });
+
+    it('Download File by ID', async () => {
+        const response = await request(app)
+            .get('/api/v1/files/download/2')
+            .set('Authorization', `Bearer ${token}`);
+        expect(response.statusCode).toEqual(200);
+        // expect(response.body).toHaveProperty('file');
+    });
+
+    it('Download File by ID with wrong ID', async () => {
+        const response = await request(app)
+            .get('/api/v1/files/download/100')
+            .set('Authorization', `Bearer ${token}`);
+        expect(response.statusCode).toEqual(500);
+        expect(response.body.message).toEqual('File Does Not Exist');
+    });
+
+    it('Display Statstic of the files', async () => {
+        const response = await request(app)
+            .get('/api/v1/files/stats')
+            .set('Authorization', `Bearer ${token}`);
+        expect(response.statusCode).toEqual(200);
+        expect(response.body).toEqual(
+            expect.arrayContaining(
+                [
+                    expect.objectContaining({
+                        Id: expect.any(Number),
+                        Title: expect.any(String),
+                        'Number Of Downloads': expect.any(Number),
+                        'Number Of Emails': expect.any(Number),
+                    })
+                ]
             )
-             
-     } )
+        )
+
+    }) ;
+
+    it('Display Statsics of file by ID' , async () =>{
+        const response = await request(app)
+              .get('/api/v1/files/stats/3')
+              .set('Authorization' , `Bearer ${token}`);
+        expect(response.statusCode).toEqual(200) ;
+        expect(response.body).toEqual(
+            expect.objectContaining(
+                {
+                    Id: expect.any(Number),
+                    Title: expect.any(String),
+                    'Number Of Downloads': expect.any(Number),
+                    'Number Of Emails': expect.any(Number),
+                }
+            )
+        )
+    }) ;
+
+    it('Statstics by Wrong ID', async () => {
+        const response = await request(app)
+              .get('/api/v1/files/stats/100')
+              .set('Authorization' , `Bearer ${token}`);
+        expect(response.statusCode).toEqual(500);
+        expect(response.body.message).toEqual('File Does Not Exist');
+    }) ;
+
+    it('Sent File through emaill' , async () => {
+        const response = await request(app)
+              .post('/api/v1/files/email/3') 
+              .set('Authorization',`Bearer ${token}`);
+        expect(response.statusCode).toEqual(200);
+        expect(response.body.message).toEqual('Email sent successfully')
+
+    }) ;
+
+    it('Sent File through emaill by Wrong ID', async () => {
+        const response = await request(app)
+              .post('/api/v1/files/email/100')
+              .set('Authorization' , `Bearer ${token}`);
+        expect(response.statusCode).toEqual(500);
+        expect(response.body.message).toEqual('File or User Not Found');
+    }) ;
 }
 );

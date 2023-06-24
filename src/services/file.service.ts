@@ -158,7 +158,7 @@ export const getFileStatsById = async (id: number) => {
                 },
             },
         });
-        if (!file) throw new Error("File Not Found");
+        if (!file) throw new Error("File Does Not Exist");
         const fileStats  = {
             Id: file.id,
             Title: file.title,
