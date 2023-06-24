@@ -4,7 +4,9 @@ describe('hashData', () => {
     it('should hash a string', async () => {
       const data = 'password';
       const hashedData = await hashData(data);
-    //  expect(hashedData).toBe('string');
+      expect(hashedData).toEqual(
+        expect.any(String)
+      );
       expect(hashedData.length).toBeGreaterThan(0);
     });
   });
@@ -31,7 +33,9 @@ describe('generateToken', () => {
     const email = 'test@example.com';
     const role = 'admin';
     const token = await generateToken(id, email, role);
-    expect(token).toBeInstanceOf(String);
+    expect(token).toEqual(
+      expect.any(String)
+    );
     expect(token.length).toBeGreaterThan(0);
   });
 });
@@ -50,10 +54,7 @@ describe('verifyToken', () => {
   });
 
   it('should throw an error if the token is invalid', async () => {
-    try {
-      await verifyToken('invalid_token');
-    } catch (error : any) {
-      expect(error.message).toBe('Invalid token');
-    }
+    const token = 'invalid_token';
+    await expect(verifyToken(token)).rejects.toThrow('jwt malformed');
   });
 });

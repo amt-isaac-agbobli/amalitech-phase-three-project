@@ -58,12 +58,5 @@ describe('User Account Verification Test', () => {
             console.log(response.statusCode)
             expect(response.statusCode).toEqual(500);
             expect(response.body.message).toEqual('Invalid OTP')
-        },  100000);
-
-
-
-
-
-
-   
+        },  100000);   
 });
