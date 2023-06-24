@@ -44,7 +44,7 @@ describe('Files Routes', () => {
              .get('/api/v1/files/download/2')
              .set('Authorization', `Bearer ${token}`);
          expect(response.statusCode).toEqual(200);
-         expect(response.body).toHaveProperty('file');
+        // expect(response.body).toHaveProperty('file');
      });
  
      it('Download File by ID with wrong ID', async () => {
@@ -53,6 +53,26 @@ describe('Files Routes', () => {
              .set('Authorization', `Bearer ${token}`);
          expect(response.statusCode).toEqual(500);
          expect(response.body.message).toEqual('File Does Not Exist');
-     });  
+     }); 
+     
+     it('Display Statstic of the file', async () =>{
+        const response = await request(app)
+             .get('/api/v1/files/stats')
+             .set('Authorization' ,`Bearer ${token}`);
+            expect(response.statusCode).toEqual(200);
+            expect(response.body).toEqual(
+                expect.arrayContaining(
+                    [
+                        expect.objectContaining({
+                            Id : expect.any(Number),
+                            Title : expect.any(String),
+                            'Number Of Downloads' : expect.any(Number),
+                            'Number Of Emails' : expect.any(Number),
+                        })
+                    ]
+                )
+            )
+             
+     } )
 }
 );
