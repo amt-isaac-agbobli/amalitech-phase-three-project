@@ -26,8 +26,5 @@ userRouter.post('/forget-password', body("email").isEmail(), otpController.forge
 userRouter.post('/reset-password', body("email").isEmail(), body("opt"),
     body("password").isStrongPassword(), otpController.resetPasswordController);
    
-userRouter.get("/hello" ,(req , res)=>{
-   res.send(req.headers.authorization);
-})
 
 export default userRouter;
