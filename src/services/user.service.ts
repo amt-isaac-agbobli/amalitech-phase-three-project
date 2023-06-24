@@ -39,7 +39,7 @@ export const userLogin = async (email:string , password:string) :Promise<UserRea
         throw new Error('Invalid credentials') ;
     }
     if(!user.isVarified){
-        throw new Error('Please your account is not veriefied') ;
+        throw new Error('Please your account is not verified') ;
     }
     return user ;
 } ;

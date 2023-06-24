@@ -73,13 +73,13 @@ describe('Files Routes', () => {
             )
         )
 
-    }) ;
+    });
 
-    it('Display Statsics of file by ID' , async () =>{
+    it('Display Statsics of file by ID', async () => {
         const response = await request(app)
-              .get('/api/v1/files/stats/3')
-              .set('Authorization' , `Bearer ${token}`);
-        expect(response.statusCode).toEqual(200) ;
+            .get('/api/v1/files/stats/3')
+            .set('Authorization', `Bearer ${token}`);
+        expect(response.statusCode).toEqual(200);
         expect(response.body).toEqual(
             expect.objectContaining(
                 {
@@ -90,31 +90,31 @@ describe('Files Routes', () => {
                 }
             )
         )
-    }) ;
+    });
 
     it('Statstics by Wrong ID', async () => {
         const response = await request(app)
-              .get('/api/v1/files/stats/100')
-              .set('Authorization' , `Bearer ${token}`);
+            .get('/api/v1/files/stats/100')
+            .set('Authorization', `Bearer ${token}`);
         expect(response.statusCode).toEqual(500);
         expect(response.body.message).toEqual('File Does Not Exist');
-    }) ;
+    });
 
-    it('Sent File through emaill' , async () => {
+    it('Sent File through emaill', async () => {
         const response = await request(app)
-              .post('/api/v1/files/email/3') 
-              .set('Authorization',`Bearer ${token}`);
+            .post('/api/v1/files/email/3')
+            .set('Authorization', `Bearer ${token}`);
         expect(response.statusCode).toEqual(200);
         expect(response.body.message).toEqual('Email sent successfully')
 
-    }) ;
+    });
 
     it('Sent File through emaill by Wrong ID', async () => {
         const response = await request(app)
-              .post('/api/v1/files/email/100')
-              .set('Authorization' , `Bearer ${token}`);
+            .post('/api/v1/files/email/100')
+            .set('Authorization', `Bearer ${token}`);
         expect(response.statusCode).toEqual(500);
         expect(response.body.message).toEqual('File or User Not Found');
-    }) ;
+    });
 }
 );
