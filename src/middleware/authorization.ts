@@ -10,8 +10,6 @@ export interface CustomRequest extends Request {
 }
 
 export const isLogin = async (req: Request, res: Response, next: NextFunction) => {
-
-    console.log(req.headers);
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
@@ -36,7 +34,6 @@ export const isAdmin = async (req: Request, res: Response, next: NextFunction) =
             return res.status(401).json({ message: 'You are not admin to access this route' });
         }
         next();
-
 
     } catch (error) {
         throw error

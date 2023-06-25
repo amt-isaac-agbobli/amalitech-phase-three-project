@@ -1,4 +1,4 @@
-import express, { Application,Request ,Response, NextFunction } from 'express';
+import express, { Application } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import { errorHandler, notFound } from '../middleware/globaErrorHandler';
