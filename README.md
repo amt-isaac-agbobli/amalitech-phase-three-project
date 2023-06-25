@@ -18,6 +18,8 @@ File Server is a digital platform designed to distribute documents such as weddi
 - Bcrypt
 - Dotenv
 - Multer
+- Jest
+- Supertest
 
 
 ## Installation
