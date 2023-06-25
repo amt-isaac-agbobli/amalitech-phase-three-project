@@ -38,8 +38,7 @@ JWT_SECRET
 AUTH_EMAIL
 AUTH_PASSWORD 
 ```
-
-*END POINT*
+## END POINTS
 1. User
     - POST sign-up [endpoint]({{url}}v1/api/users/sign-up)
         Allows users to sign up with an email and password.
