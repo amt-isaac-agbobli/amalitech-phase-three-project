@@ -18,7 +18,7 @@ To get a development environment running:
 npm install
 npm run build
 npm start
-
+```
 *END POINT*
 1. User
     - POST sign-up [endpoint]({{url}}v1/api/users/sign-up)
@@ -62,6 +62,8 @@ npm start
 ## ER Diagram
 [Link Here](https://drawsql.app/teams/agbobli/diagrams/fileserverdb)
 ![snippet](database-erd/drawSQL-fileserverdb.png)
+
+
 
 ## OFFICIAL DOCUMENTATION HERE 
 [Link Here]()
