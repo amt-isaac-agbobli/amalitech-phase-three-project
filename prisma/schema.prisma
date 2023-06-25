@@ -29,7 +29,8 @@ model Admin {
   file  File[]
 }
 
-model Otp{
+model Otp {
+  id        Int     @id @default(autoincrement())
   email     String   @unique
   otp       String
   createdAt DateTime @default(now())
