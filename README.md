@@ -9,6 +9,16 @@ File Server is a digital platform designed to distribute documents such as weddi
 - Node.js
 - PostgreSQL
 - TypeScript
+- Express
+- Prisma
+- JWT
+- Nodemailer
+- Swagger
+- Cors
+- Bcrypt
+- Dotenv
+- Multer
+
 
 ## Installation
 
@@ -19,6 +29,16 @@ npm install
 npm run build
 npm start
 ```
+##ENVIRONMENT VARIABLES
+```bash
+DATABASE_URL
+PORT
+JWT_EXPIRE
+JWT_SECRET
+AUTH_EMAIL
+AUTH_PASSWORD 
+```
+
 *END POINT*
 1. User
     - POST sign-up [endpoint]({{url}}v1/api/users/sign-up)
@@ -64,6 +84,7 @@ npm start
 
     - GET Stats a file [endpoint]({{url}}v1/api/files/stats/:id)
         Allows admins to view a file stats.
+
 
 ## ER Diagram
 [Link Here](https://drawsql.app/teams/agbobli/diagrams/fileserverdb)
