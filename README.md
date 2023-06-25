@@ -23,12 +23,18 @@ npm start
 1. User
     - POST sign-up [endpoint]({{url}}v1/api/users/sign-up)
         Allows users to sign up with an email and password.
-
+    
+    - POST verify [endpoint]({{url}}v1/api/users/verify)
+        Allows users to verify their email with a verification code.
+    
+    - POST request-otp [endpoint]({{url}}v1/api/users/request-otp)
+        Allows users to request an OTP to verify their email.
+     
     - POST sign-in [endpoint]({{url}}v1/api/users/sign-in)
         Allows users to log in with their email and password.
 
     - POST forgot password [endpoint]({{url}}v1/api/users/forgot-password)
-        Allows users to reset their password by sending a reset link to their email.
+        Allows users to reset their password by sending a verification code to their email.
 
     - POST reset password [endpoint]({{url}}v1/api/users/reset-password)
         Allows users to reset their password by providing a new password.
@@ -44,7 +50,7 @@ npm start
 
     - GET download a file via email [endpoint]({{url}}v1/api/files/email:id)
         Allows users to download a file via email.
-<!-- ![snippet](Dev-Data/img/snippet.png) -->
+
   
 2. Admin
     - POST sign-in [endpoint]({{url}}v1/api/admins/sign-in)
@@ -65,8 +71,8 @@ npm start
 
 
 
-## OFFICIAL DOCUMENTATION HERE 
-[Link Here]()
+## OFFICIAL SWAGGER DOCUMENTATION HERE 
+[Link Here](https://file-server-ndag.onrender.com/api/docs/#/)
 
 
     
