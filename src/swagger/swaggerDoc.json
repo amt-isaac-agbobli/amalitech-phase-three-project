@@ -295,12 +295,7 @@
           "404": {
             "description": "Not found"
           }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
+        }
       }
       
     },

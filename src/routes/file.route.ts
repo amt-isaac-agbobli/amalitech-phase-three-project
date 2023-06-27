@@ -17,7 +17,7 @@ fileRouter.post('/upload', isLogin, isAdmin, upload.single('file'),
 
 
 //User Route
-fileRouter.get('/', isLogin , fileController.getFilesController);
+fileRouter.get('/' , fileController.getFilesController);
 
 fileRouter.get('/:id', isLogin, fileController.getFileByIdController);
 
