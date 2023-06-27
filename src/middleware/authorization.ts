@@ -19,7 +19,6 @@ export const isLogin = async (req: Request, res: Response, next: NextFunction) =
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET!) as TokenPayload;
         (req as CustomRequest).token = decoded;
-
         next();
     } catch (err) {
         return res.status(401).json({ message: 'Invalid or expired token' });
