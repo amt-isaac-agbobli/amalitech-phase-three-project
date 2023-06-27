@@ -42,48 +42,48 @@ AUTH_PASSWORD
 ```
 ## END POINTS
 1. User
-    - POST sign-up [endpoint]({{url}}v1/api/users/sign-up)
+    - POST sign-up [endpoint](https://file-server-ndag.onrender.com/v1/api/users/sign-up)
         Allows users to sign up with an email and password.
     
-    - POST verify [endpoint]({{url}}v1/api/users/verify)
+    - POST verify [endpoint](https://file-server-ndag.onrender.com/v1/api/users/verify)
         Allows users to verify their email with a verification code.
     
-    - POST request-otp [endpoint]({{url}}v1/api/users/request-otp)
+    - POST request-otp [endpoint](https://file-server-ndag.onrender.com/v1/api/users/request-otp)
         Allows users to request an OTP to verify their email.
      
-    - POST sign-in [endpoint]({{url}}v1/api/users/sign-in)
+    - POST sign-in [endpoint](https://file-server-ndag.onrender.com/v1/api/users/sign-in)
         Allows users to log in with their email and password.
 
-    - POST forgot password [endpoint]({{url}}v1/api/users/forgot-password)
+    - POST forgot password [endpoint](https://file-server-ndag.onrender.com/v1/api/users/forgot-password)
         Allows users to reset their password by sending a verification code to their email.
 
-    - POST reset password [endpoint]({{url}}v1/api/users/reset-password)
+    - POST reset password [endpoint](https://file-server-ndag.onrender.com/v1/api/users/reset-password)
         Allows users to reset their password by providing a new password.
 
-    - GET all Files [endpoint]({{url}}v1/api/files/)
+    - GET all Files [endpoint](https://file-server-ndag.onrender.com/v1/api/files/)
         Allows users to view all files.
 
-    - GET a File [endpoint]({{url}}v1/api/file/:id)
+    - GET a File [endpoint](https://file-server-ndag.onrender.com/v1/api/file/:id)
         Allows users to view a file.
 
-    - GET download a file [endpoint]({{url}}v1/api/files/download/:id)
+    - GET download a file [endpoint](https://file-server-ndag.onrender.com/v1/api/files/download/:id)
         Allows users to download a file.
 
-    - GET download a file via email [endpoint]({{url}}v1/api/files/email:id)
+    - GET download a file via email [endpoint](https://file-server-ndag.onrender.com/v1/api/files/email:id)
         Allows users to download a file via email.
 
   
 2. Admin
-    - POST sign-in [endpoint]({{url}}v1/api/admins/sign-in)
+    - POST sign-in [endpoint](https://file-server-ndag.onrender.com/v1/api/admins/sign-in)
         Allows admins to log in with their email and password.
 
-    - POST upload a file [endpoint]({{url}}v1/api/files/upload)
+    - POST upload a file [endpoint](https://file-server-ndag.onrender.com/v1/api/files/upload)
         Allows admins to upload a file.
 
-    - GET Stats a files [endpoint]({{url}}v1/api/files/stats/)
+    - GET Stats a files [endpoint](https://file-server-ndag.onrender.com/v1/api/files/stats/)
         Allows admins to view all files stats.
 
-    - GET Stats a file [endpoint]({{url}}v1/api/files/stats/:id)
+    - GET Stats a file [endpoint](https://file-server-ndag.onrender.com/v1/api/files/stats/:id)
         Allows admins to view a file stats.
 
 
