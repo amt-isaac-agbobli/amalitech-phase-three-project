@@ -8,11 +8,10 @@
     "resolveJsonModule": true,
     "moduleResolution": "node",
     
-  
-   
   },
   "include": [
     "./src/**/*.ts",
-    "./swagger/*.json"
+    "./swagger/*.json",
+    "./views/*.ejs"
   ]
 }

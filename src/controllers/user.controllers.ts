@@ -91,3 +91,30 @@ export const userProfile = async (req: Request, res: Response, next: NextFunctio
         next(error)
     }
 }
+
+/**
+ * @desc Controller for User Login Page
+ * @access Public
+ * @route GET /api/v1/users/login
+ * */
+export const userLoginPage = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.render('login');
+    } catch (error) {
+        next(error)
+    }
+}
+
+/**
+ * 
+ * @desc Controller for User Registration Page
+ * @access Public
+ * @route GET /api/v1/users/register
+ * */
+export const userRegisterPage = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.render('register');
+    } catch (error) {
+        next(error)
+    }
+}
