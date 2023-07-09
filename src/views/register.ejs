@@ -29,14 +29,10 @@
             >
               Register your account
             </h1>
-            <form class="space-y-4 md:space-y-6" method="POST" action="/api/v1/users/sign-up">
-              <!-- Warning message-->
-              <% if(typeof message !== 'undefined') { %>
-                <div class="text-white text-md bg-red-300 p-3 rounded-md">
-                  <p class="text-center"><%= message %></p>
+            <form class="space-y-4 md:space-y-6" method="POST" id="register-form">
+                <div class="text-white text-md bg-red-300 p-3 rounded-md hidden" id="error-message">
+                  <p class="text-center"></p>
                 </div> 
-              <% } %>
-              
               <div>
                 <label
                   for="email"
@@ -86,5 +82,36 @@
         </div>
       </div>
     </section>
+    <script>
+      const loginForm = document.querySelector("#register-form");
+
+      loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const email = document.querySelector("#email").value;
+        const password = document.querySelector("#password").value;
+
+        const response = await fetch("/api/v1/users/sign-up", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await response.json();
+
+        if (response.created) {
+          // Login successful, redirect to verify page
+          window.location.href = "/verify";
+        } else {
+          // Login failed, display error message
+          const errorMessage = document.querySelector("#error-message");
+          const errorText = document.querySelector("#error-message p");
+            errorMessage.classList.remove("hidden");
+            errorText.textContent = data.message;
+         // errorMessage.textContent = data.message;
+          console.log(data)
+        }
+      });
+    </script>
   </body>
 </html>
