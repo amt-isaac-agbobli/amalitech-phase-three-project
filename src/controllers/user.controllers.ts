@@ -149,3 +149,11 @@ export const dashboardPage = async (req: Request, res: Response, next: NextFunct
         next(error)
     }
 }
+
+export const verifyPage = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.render('verify');
+    } catch (error) {
+        next(error)
+    }
+}

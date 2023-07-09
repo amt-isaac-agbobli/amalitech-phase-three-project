@@ -12,4 +12,5 @@ userPageRouter.get('/forget-password' , userController.forgetPasswordPage);
 
 userPageRouter.get('/dashboard' , userController.dashboardPage);
 
+userPageRouter.get('/verify' , userController.verifyPage);
 export default userPageRouter;
