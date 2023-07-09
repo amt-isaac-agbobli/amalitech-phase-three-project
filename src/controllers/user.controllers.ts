@@ -77,22 +77,23 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
         
         const user = await userService.userLogin(email, password);
         if(!user){
-            res.render('login', {message: "User not found"});
             return res.status(400).json({
                 message: "User not found" 
             });
         }
         const passwordMatch = await compareData(password, user.password);
         if (!passwordMatch) {
-            res.render('login', {message: "Invalid Password"});
             return res.status(400).json({
                 message: "Invalid Password"
             });
         }
+        if(!user.isVarified){
+          // res.render('verify' , {email: user.email}) ;
+        }
+
         const token = await generateToken(user.id, user.email , user.role);
-        //redirect the page if the user
         res.cookie('token', token, { maxAge: 900000, httpOnly: true });
-        res.redirect('dashboard');
+       // res.redirect('dashboard');
         return res.status(200).json({
             Token: token
         });

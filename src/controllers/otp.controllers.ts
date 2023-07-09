@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 import { deleteOtp, resetPassword, sendVerificationEmail,sendComfirmationEmail, 
          verifyOtp, verifyUser } from '../services/otp.service';
+import { generateToken } from "../utils/helper";
+import { getUserByEmail } from '../services/user.service';
 
 /**
  * @desc Controller for requsting of OTP
@@ -36,11 +38,13 @@ export const requestOtpController = async (req: Request, res: Response, next: Ne
  * */  
 export const verifyEmailController = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        console.log(req.body)
         const errors = validationResult(req);
         if (!errors.isEmpty) {
             return res.status(400).json({ errors: errors.array() });
         }
         const { email, otp } = req.body;
+
         const validOtp = await verifyOtp({ email, otp });
         if (validOtp) {
             await verifyUser(email);
@@ -53,7 +57,13 @@ export const verifyEmailController = async (req: Request, res: Response, next: N
             html: `<h1> Your email has been verified </h1> <br> <p> You can now login to your account </p>`
         } ;
         await sendComfirmationEmail(email, mailOption);
-
+        const user = await getUserByEmail(email);
+        if (!user) {
+            return res.status(404).json({ Error: "User not found" });
+        }
+        const token = await generateToken(user.id, user.email , user.role);
+        res.cookie('token', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7 });
+        res.redirect('dashboard');
         res.status(200).json({ valid: validOtp })
     } catch (error) {
         next(error);

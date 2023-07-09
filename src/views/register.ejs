@@ -29,7 +29,14 @@
             >
               Register your account
             </h1>
-            <form class="space-y-4 md:space-y-6" action="#">
+            <form class="space-y-4 md:space-y-6" method="POST" action="/api/v1/users/sign-up">
+              <!-- Warning message-->
+              <% if(typeof message !== 'undefined') { %>
+                <div class="text-white text-md bg-red-300 p-3 rounded-md">
+                  <p class="text-center"><%= message %></p>
+                </div> 
+              <% } %>
+              
               <div>
                 <label
                   for="email"
