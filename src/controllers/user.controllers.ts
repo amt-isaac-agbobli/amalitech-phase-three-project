@@ -27,8 +27,16 @@ export const userReigister = async (req: Request, res: Response, next: NextFunct
                 message : "Email is required"
             });
         }  
-        const newUser = await userService.userReigister(req.body);
 
+        const userExit =  await userService.userExit(email);
+        if(userExit){
+            res.render('register', {message: "Email already exist"});
+            res.status(400).json({ 
+                message: "Email already exist"
+            });
+        }
+        const newUser = await userService.userReigister(req.body);
+       
         const otpDetails = {
             email:newUser.email,
             subject: "Email Verification",
@@ -37,6 +45,8 @@ export const userReigister = async (req: Request, res: Response, next: NextFunct
         };
         
         await sendVerificationEmail(newUser.email , otpDetails);
+        
+        res.render('verify' , {email: newUser.email}) ;
         return res.status(201).json({
             Message : "User account was created successful check your email to verify your account"
         });
