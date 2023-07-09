@@ -29,23 +29,11 @@
             >
               Verify Email
             </h1>
-            <form class="space-y-4 md:space-y-6" method="POST" action="/api/v1/users/verify">
-                <div>
-                    <label
-                      for="email"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >Email</label
-                    >
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      value="<%= email %>"
-                      required=""
-                    />
-                  </div>
-              <div>
+            <div class="text-white text-md bg-red-300 p-3 rounded-md hidden" id="error-message">
+                <p class="text-center"></p>
+              </div>
+            <form class="space-y-4 md:space-y-6" method="POST" id="verify-form">
+                         <div>
                 <label
                   for="otp"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -79,5 +67,37 @@
         </div>
       </div>
     </section>
+    <script>
+        const verifyForm = document.querySelector("#verify-form");
+  
+        verifyForm.addEventListener("submit", async (event) => {
+          event.preventDefault();
+  
+          const email = localStorage.getItem("email");
+          const otp = document.querySelector("#otp").value;
+  
+          const response = await fetch("/api/v1/users/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, otp }),
+          });
+  
+          const data = await response.json();
+  
+          if (response.status === 200) {
+            // Login successful, redirect to verify page
+            localStorage.setItem("token", data.Token);
+            window.location.href = "/dashboard";
+          } else {
+            // Login failed, display error message
+            const errorMessage = document.querySelector("#error-message");
+            const errorText = document.querySelector("#error-message p");
+              errorMessage.classList.remove("hidden");
+              errorText.textContent = data.message;
+           // errorMessage.textContent = data.message;
+            console.log(data)
+          }
+        });
+      </script>
   </body>
 </html>

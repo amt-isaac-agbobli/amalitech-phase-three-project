@@ -99,8 +99,9 @@
 
         const data = await response.json();
 
-        if (response.created) {
+        if (response.status === 201) {
           // Login successful, redirect to verify page
+          localStorage.setItem("email", email);
           window.location.href = "/verify";
         } else {
           // Login failed, display error message
