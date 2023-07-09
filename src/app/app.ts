@@ -8,6 +8,7 @@ import fileRouter from '../routes/file.route';
 import swaggerUi from 'swagger-ui-express';
 import path from 'path';
 import * as swaggerDoc from '../swagger/swaggerDoc.json'
+import userPageRouter from '../routes/user.page.routes';
 
 
 const app: Application = express();
@@ -34,6 +35,8 @@ app.use('/api/v1/admins/', adminRouter);
 app.use('/api/v1/users/', userRouter);
 app.use('/api/v1/files/', fileRouter);
 
+//Page Routes
+app.use('/', userPageRouter) ;
 
 app.use( "/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 

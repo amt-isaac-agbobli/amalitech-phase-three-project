@@ -95,7 +95,7 @@ export const userProfile = async (req: Request, res: Response, next: NextFunctio
 /**
  * @desc Controller for User Login Page
  * @access Public
- * @route GET /api/v1/users/login
+ * @route GET /login
  * */
 export const userLoginPage = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -109,11 +109,25 @@ export const userLoginPage = async (req: Request, res: Response, next: NextFunct
  * 
  * @desc Controller for User Registration Page
  * @access Public
- * @route GET /api/v1/users/register
+ * @route GET /register
  * */
 export const userRegisterPage = async (req: Request, res: Response, next: NextFunction) => {
     try {
         res.render('register');
+    } catch (error) {
+        next(error)
+    }
+}
+
+/**
+ * @desc Controller for Forget Password Page
+ * @access Public
+ * @route GET /forget-password
+ * 
+ * */
+export const forgetPasswordPage = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.render('forget-password');
     } catch (error) {
         next(error)
     }

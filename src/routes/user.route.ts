@@ -26,9 +26,7 @@ userRouter.post('/forget-password', body("email").isEmail(), otpController.forge
 userRouter.post('/reset-password', body("email").isEmail(), body("opt"),
     body("password").isStrongPassword(), otpController.resetPasswordController);
 
-userRouter.get('/login' , userController.userLoginPage);
 
-userRouter.get('/register' , userController.userRegisterPage);
    
 
 export default userRouter;
