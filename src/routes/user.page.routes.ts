@@ -10,4 +10,6 @@ userPageRouter.get('/register' , userController.userRegisterPage);
 
 userPageRouter.get('/forget-password' , userController.forgetPasswordPage);
 
+userPageRouter.get('/dashboard' , userController.dashboardPage);
+
 export default userPageRouter;

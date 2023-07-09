@@ -132,3 +132,17 @@ export const forgetPasswordPage = async (req: Request, res: Response, next: Next
         next(error)
     }
 }
+
+/** 
+ * @desc Controller for dashboard Page
+ * @access Private
+ * @route GET /dashboard
+ * 
+ */
+export const dashboardPage = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.render('dashboard');
+    } catch (error) {
+        next(error)
+    }
+}
