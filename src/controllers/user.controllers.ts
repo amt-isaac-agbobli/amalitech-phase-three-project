@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 import * as userService from '../services/user.service';
 import {sendVerificationEmail} from '../services/otp.service'
-import { generateToken } from "../utils/helper";
+import { compareData, generateToken } from "../utils/helper";
 import { CustomRequest } from '../interfaces/auth.interfaces';
 
 /**
@@ -76,6 +76,19 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
         }
         
         const user = await userService.userLogin(email, password);
+        if(!user){
+            res.render('login', {message: "User not found"});
+            return res.status(400).json({
+                message: "User not found" 
+            });
+        }
+        const passwordMatch = await compareData(password, user.password);
+        if (!passwordMatch) {
+            res.render('login', {message: "Invalid Password"});
+            return res.status(400).json({
+                message: "Invalid Password"
+            });
+        }
         const token = await generateToken(user.id, user.email , user.role);
         //redirect the page if the user
         res.cookie('token', token, { maxAge: 900000, httpOnly: true });
