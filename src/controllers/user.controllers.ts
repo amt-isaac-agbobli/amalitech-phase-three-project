@@ -45,9 +45,9 @@ export const userReigister = async (req: Request, res: Response, next: NextFunct
     }
 };
 /**
- * @desc Controller for User Sign up 
+ * @desc Controller for User Sign in 
  * @access Public
- * @route POST /api/v1/users/sign-up  
+ * @route POST /api/v1/users/sign-in 
  * */  
 export const userLogin = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -67,6 +67,9 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
         
         const user = await userService.userLogin(email, password);
         const token = await generateToken(user.id, user.email , user.role);
+        //redirect the page if the user
+        res.cookie('token', token, { maxAge: 900000, httpOnly: true });
+        res.redirect('dashboard');
         return res.status(200).json({
             Token: token
         });
