@@ -3,6 +3,7 @@ import { User, UserRead } from '../types/user.types';
 import { hashData, compareData } from '../utils/helper';
 
 
+
 export const userExit = async (email: string): Promise<boolean> => {
     const user = await db.user.findUnique({
         where: { email }
@@ -33,20 +34,20 @@ export const userReigister = async (user: User): Promise<UserRead> => {
 
 };
 
-export const userLogin = async (email: string, password: string): Promise<UserRead> => {
+export const checkVerification = async (email: string): Promise<boolean> => {
     const user = await db.user.findUnique({
         where: { email }
     });
-    if (!user) {
-        throw new Error('User not found');
+    if (!user?.isVarified) {
+        return false;
     }
-    const isMatch = await compareData(password, user.password);
-    if (!isMatch) {
-        throw new Error('Invalid credentials');
-    }
-    if (!user.isVarified) {
-        throw new Error('Please your account is not verified');
-    }
+    return true;
+};
+
+export const userLogin = async (email: string, password: string) => {
+    const user = await db.user.findUnique({
+        where: { email }
+    });
     return user;
 };
 
