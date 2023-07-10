@@ -13,4 +13,6 @@ userPageRouter.get('/forget-password' , userController.forgetPasswordPage);
 userPageRouter.get('/dashboard' , userController.dashboardPage);
 
 userPageRouter.get('/verify' , userController.verifyPage);
+
+userPageRouter.get('/file/:id' , userController.filePage);
 export default userPageRouter;

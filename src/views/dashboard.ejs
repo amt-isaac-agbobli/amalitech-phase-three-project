@@ -6,6 +6,8 @@
   <title>Dashboard</title>
   <link rel="stylesheet" href="/output.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </head>
 <body class="bg-gray-100">
   <header class="bg-gray-50 dark:bg-gray-900 shadow-md sticky ">
@@ -84,10 +86,7 @@
               Description
             </th>
             <th scope="col" class="px-6 py-3">
-              Email
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Download
+              Action
             </th>
           </tr>
         </thead>
@@ -128,15 +127,9 @@
               ${file.description}
             </td>
             <td class="px-6 py-4">
-              <div class="flex items-center">
-                <a href="#" type="button" 
-                  class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Email</a>
-              </div>
-            </td>
-            <td class="px-6 py-4">
               <!-- Modal toggle -->
-              <a href="#" type="button" 
-                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Download</a>
+              <a href="/file/${file.id}" type="button" 
+                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View File</a>
             </td>
           </tr>` ;
         });
@@ -163,15 +156,9 @@
               ${file.description}
             </td>
             <td class="px-6 py-4">
-              <div class="flex items-center">
-                <a href="#" type="button" 
-                  class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Email</a>
-              </div>
-            </td>
-            <td class="px-6 py-4">
               <!-- Modal toggle -->
-              <a href="#" type="button" 
-                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Download</a>
+              <a href="/file/${file.id}" type="button" 
+                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View File</a>
             </td>
           </tr>` ;
         });
@@ -189,6 +176,36 @@
       }
 
       });
+
+  const emailForm = document.querySelector("#email-form");
+  const id = document.querySelector("id").value ;
+   
+  emailForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const response = await fetch(`/api/v1/files/email/2`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({ id }),
+    });
+    const data = await response.json();
+    if (response.status === 200) {
+      // Login successful, redirect to dashboard
+      
+     // window.location.href = "/dashboard";
+     console.log(response)
+    } else {
+      // Login failed, display error message
+      const errorMessage = document.querySelector("#error-message");
+      const errorText = document.querySelector("#error-message p");
+        errorMessage.classList.remove("hidden");
+        errorText.textContent = data.message;
+     // errorMessage.textContent = data.message;
+      console.log(data)
+    }
+  });
       
       
   </script>

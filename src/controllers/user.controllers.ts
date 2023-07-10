@@ -178,3 +178,11 @@ export const verifyPage = async (req: Request, res: Response, next: NextFunction
         next(error)
     }
 }
+
+export const filePage = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.render('file');
+    } catch (error) {
+        next(error)
+    }
+}
