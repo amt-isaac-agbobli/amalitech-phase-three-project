@@ -177,6 +177,13 @@ export const verifyPage = async (req: Request, res: Response, next: NextFunction
         next(error)
     }
 }
+export const resetPasswordPage = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.render('reset-password');
+    } catch (error) {
+        next(error)
+    }
+}
 
 export const filePage = async (req: Request, res: Response, next: NextFunction) => {
     try {

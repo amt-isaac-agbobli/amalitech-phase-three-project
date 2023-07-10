@@ -12,6 +12,8 @@ userPageRouter.get('/register' , userController.userRegisterPage);
 
 userPageRouter.get('/forget-password' , userController.forgetPasswordPage);
 
+userPageRouter.get('/reset-password' , userController.resetPasswordPage);
+
 userPageRouter.get('/dashboard' , userController.dashboardPage);
 
 userPageRouter.get('/verify' , userController.verifyPage);
