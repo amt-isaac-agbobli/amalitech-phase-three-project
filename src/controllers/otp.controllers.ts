@@ -64,7 +64,7 @@ export const verifyEmailController = async (req: Request, res: Response, next: N
             return res.status(404).json({ Error: "User not found" });
         }
         const token = await generateToken(user.id, user.email, user.role);
-       // res.cookie('token', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7 });
+        res.cookie('token', token, { httpOnly: true, maxAge:  1000 * 60 * 60 * 24 });
         res.status(200).json({
             valid: validOtp,
             Tokee: token

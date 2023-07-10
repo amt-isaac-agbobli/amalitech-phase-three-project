@@ -1,221 +1,175 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <title>File Server</title>
     <link rel="stylesheet" href="/output.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js"></script>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
-    />
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/toastify-js"
-    ></script>
-  </head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
 
-  <body class="bg-gray-100">
+<body class="bg-gray-100 ">
     <header class="bg-gray-50 dark:bg-gray-900 shadow-md sticky">
-      <nav
-        class="border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700 sticky"
-      >
-        <div
-          class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
-        >
-          <a href="#" class="flex items-center">
-            <span
-              class="self-center text-3xl font-bold text-blue-700 whitespace-nowrap dark:text-white"
-              >File Server</span
-            >
-          </a>
-          <button
-            data-collapse-toggle="navbar-solid-bg"
-            type="button"
-            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="navbar-solid-bg"
-            aria-expanded="false"
-          >
-            <span class="sr-only">Open main menu</span>
-            <svg
-              class="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
-          </button>
-          <div class="hidden w-full md:block md:w-auto" id="navbar-solid-bg">
-            <ul
-              class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-transparent dark:border-gray-700"
-            >
-              <li>
-                <a
-                  href="/dashboard"
-                  class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
-                  aria-current="page"
-                  >Dashboard</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                  >Profile</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                  >Logout</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                  >Sign in</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+        <nav class="border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700 sticky">
+            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                <a href="#" class="flex items-center">
+                    <span class="self-center text-3xl font-bold text-blue-700 whitespace-nowrap dark:text-white">File
+                        Server</span>
+                </a>
+                <button data-collapse-toggle="navbar-solid-bg" type="button"
+                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                    aria-controls="navbar-solid-bg" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 17 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M1 1h15M1 7h15M1 13h15" />
+                    </svg>
+                </button>
+                <div class="hidden w-full md:block md:w-auto" id="navbar-solid-bg">
+                    <ul
+                        class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-transparent dark:border-gray-700">
+                        <li>
+                            <a href="/dashboard"
+                                class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
+                                aria-current="page">Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Profile</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Logout</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <main class="flex items-center justify-center">
-      <div
-        class="w-full items-center justify-center p-4 mx-10 md:mx-40 my-10 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700"
-      >
-        <h5
-          class="mb-2 text-3xl font-bold text-gray-900 dark:text-white"
-          id="title"
-        ></h5>
-        <p
-          class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400"
-          id="description"
-        ></p>
         <div
-          class="items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4"
-        >
-          <div
-            class="w-full sm:w-auto focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
-          >
-            <form method="GET" id="download-form">
-              <input type="hidden" name="id" value="" />
-              <button
-                type="submit"
-                class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-              >
-                Download File
-              </button>
-            </form>
-          </div>
-          <div
-            class="w-full sm:w-auto focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
-          >
-            <form method="POST" id="email-form">
-              <input type="hidden" name="id" value="" />
-              <button
-                type="submit"
-                class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-              >
-                Email File
-              </button>
-            </form>
-          </div>
+            class="w-full items-center justify-center p-4 mx-10 md:mx-40 my-10 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white" id="title"></h5>
+            <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400" id="description"></p>
+            <div class="items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
+                <div
+                    class="w-full sm:w-auto focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                    <form method="GET" id="download-form">
+                        <input type="hidden" name="id" value="" />
+                        <button type="submit"
+                            class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            Download File
+                        </button>
+                    </form>
+                </div>
+                <div
+                    class="w-full sm:w-auto focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                    <form method="POST" id="email-form">
+                        <input type="hidden" name="id" value="" />
+                        <button type="submit"
+                            class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            Email File
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
     </main>
     <script>
-      const title = document.querySelector("#title");
-      const description = document.querySelector("#description");
-      const id = window.document.URL.split("/")[4];
-     
-      window.onload = async () => {
-        const response = await fetch(`/api/v1/files/${id}`, {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        });
-        const data = await response.json();
-        if (response.status === 200) {
-          title.innerHTML = data.file.title;
-          description.innerHTML = data.file.description;
-        }
+        const title = document.querySelector("#title");
+        const description = document.querySelector("#description");
+        const id = window.document.URL.split("/")[4];
 
-        //set the id to the hidden input
-        document.getElementById("download-form").id.value = id;
-        document.getElementById("email-form").id.value = id;
-      };
-
-      document
-        .getElementById("download-form")
-        .addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const response = await fetch(`/api/v1/files/download/${id}`, {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          });
-          //download blob
-          const blob = await response.blob();
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement("a");
-          let filename = title.innerHTML; 
-          if (blob.type === "application/pdf") {
-            filename += ".pdf";
-          } else if (blob.type === "image/jpeg") {
-            filename += ".jpg";
-          } else if (blob.type === "image/png") {
-            filename += ".png";
-          } else if (
-            blob.type ===
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          ) {
-            filename += ".docx";
-          }
-          link.href = url;
-          link.setAttribute("download", filename);
-          document.body.appendChild(link);
-          link.click(); 
-          link.remove(); 
-          
-        });
-      //email file
-        document
-            .getElementById("email-form")
-            .addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const response = await fetch(`/api/v1/files/email/${id}`, {
-                method: "POST",
+        window.onload = async () => {
+            const expiration = localStorage.getItem('expiration');
+            if (expiration && new Date(expiration) <= new Date()) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('expiration');
+            }
+            if (!localStorage.getItem("token")) {
+                window.location.href = "/login";
+            }
+            
+            const response = await fetch(`/api/v1/files/${id}`, {
                 headers: {
-                Authorization: "Bearer " + localStorage.getItem("token"),
-                "Content-Type": "application/json",
+                    Authorization: "Bearer " + localStorage.getItem("token"),
                 },
-                body: JSON.stringify({
-                id : id
-                }),
             });
             const data = await response.json();
             if (response.status === 200) {
-                alert(data.message);
-            } else {
-                alert(data.message);
+                
+                title.innerHTML = data.file.title;
+                description.innerHTML = data.file.description;
             }
+
+            //set the id to the hidden input
+            document.getElementById("download-form").id.value = id;
+            document.getElementById("email-form").id.value = id;
+        };
+
+        document
+            .getElementById("download-form")
+            .addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const response = await fetch(`/api/v1/files/download/${id}`, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("token"),
+                    },
+                });
+                //download blob
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                let filename = title.innerHTML;
+                if (blob.type === "application/pdf") {
+                    filename += ".pdf";
+                } else if (blob.type === "image/jpeg") {
+                    filename += ".jpg";
+                } else if (blob.type === "image/png") {
+                    filename += ".png";
+                } else if (
+                    blob.type ===
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                ) {
+                    filename += ".docx";
+                }
+                link.href = url;
+                link.setAttribute("download", filename);
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+
             });
-            
-    
+        //email file
+        document
+            .getElementById("email-form")
+            .addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const response = await fetch(`/api/v1/files/email/${id}`, {
+                    method: "POST",
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("token"),
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        id: id
+                    }),
+                });
+                const data = await response.json();
+                if (response.status === 200) {
+                    alert(data.message);
+                } else {
+                    alert(data.message);
+                }
+            });
+
+
     </script>
-  </body>
+</body>
+
 </html>

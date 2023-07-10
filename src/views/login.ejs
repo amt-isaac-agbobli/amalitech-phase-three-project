@@ -114,10 +114,24 @@
     </section>
     <script>
       const loginForm = document.querySelector("#login-form");
+      window.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem("token");
+        const expiration = localStorage.getItem("expiration");
+        if (token && expiration) {
+          // Check if token is expired
+          if (new Date(expiration) > new Date()) {
+            // Token is valid, redirect to dashboard
+            window.location.href = "/dashboard";
+          } else {
+            // Token is expired, remove token and expiration from localStorage
+            localStorage.removeItem("token");
+            localStorage.removeItem("expiration");
+          }
+        }
+      });
 
       loginForm.addEventListener("submit", async (event) => {
         event.preventDefault();
-
         const email = document.querySelector("#email").value;
         const password = document.querySelector("#password").value;
 
@@ -131,6 +145,8 @@
 
         if (response.ok) {
           // Login successful, redirect to dashboard
+          const expiration =  new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+          localStorage.setItem('expiration', expiration.toISOString());
           localStorage.setItem('token', data.Token);
           window.location.href = "/dashboard";
         } else {

@@ -89,8 +89,7 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
         }
 
         const token = await generateToken(user.id, user.email , user.role);
-        res.cookie('token', token, { maxAge: 900000, httpOnly: true });
-       // res.redirect('dashboard');
+        res.cookie('token', token, { httpOnly: true, maxAge:  1000 * 60 * 60 * 24 });
         return res.status(200).json({
             Token: token
         });
