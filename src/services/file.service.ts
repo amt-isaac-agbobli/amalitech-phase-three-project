@@ -127,10 +127,10 @@ export const getFileStats = async () => {
             },
         });
         const fileStats = files.map((file) => ({
-            Id: file.id,
-            Title: file.title,
-            "Number Of Emails": file.emails.length,
-            "Number Of Downloads": file.downloads.length,
+            id: file.id,
+            title: file.title,
+            numberOfEmails: file.emails.length,
+            numberOfDownloads: file.downloads.length,
         }));
         return fileStats;
     } catch (error) {

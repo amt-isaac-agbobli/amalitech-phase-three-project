@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/output.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+
+<body class="bg-gray-100">
+    <header class="bg-gray-50 dark:bg-gray-900 shadow-md sticky ">
+        <nav class="border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700 sticky">
+            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                <a href="#" class="flex items-center">
+                    <span class="self-center text-3xl font-bold text-blue-700 whitespace-nowrap dark:text-white">File
+                        Server</span>
+                </a>
+                <button data-collapse-toggle="navbar-solid-bg" type="button"
+                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                    aria-controls="navbar-solid-bg" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 17 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M1 1h15M1 7h15M1 13h15" />
+                    </svg>
+                </button>
+                <div class="hidden w-full md:block md:w-auto" id="navbar-solid-bg">
+                    <ul
+                        class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-transparent dark:border-gray-700">
+                        <li>
+                            <a href="#"
+                                class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
+                                aria-current="page">Dashboard</a>
+                        </li>
+                        <li id="file">
+                            <a href="#"
+                                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Upload Files</a>
+                        </li>
+                        <li id="profle">
+                            <a href="#"
+                                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Profile</a>
+                        </li>
+                        <li id="logout">
+                            <a href="#"
+                                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-10 mt-5">
+            <div class="flex items-center justify-between py-4 bg-white dark:bg-gray-800">
+                <div>
+
+                </div>
+                <label for="table-search" class="sr-only">Search</label>
+                <div class="relative mr-3">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                    <input type="text" id="search"
+                        class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Search for users">
+                </div>
+            </div>
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="p-4">
+                            #
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            File Title
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Downloads
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Emails
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+
+        </div>
+        </div>
+        </div>
+
+    </main>
+    <script>
+
+        const tbody = document.querySelector("#tbody");
+        const search = document.querySelector("#search");
+
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            // check if the token is expired
+            const expiration = localStorage.getItem('expiration');
+            if (expiration && new Date(expiration) <= new Date()) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('expiration');
+            }
+
+            if (!localStorage.getItem('token')) {
+                window.location.href = '/admin/index';
+            }
+
+            const response = await fetch("/api/v1/files/stats", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+
+            const data = await response.json();
+         
+            if (response.status === 200) {
+                // map through the data and display it in the table
+                const files = data.map((file, index) => {
+                    return `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <td class="w-4 p-4">
+              ${index + 1}
+            </td>
+            <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+              <div class="text-base font-semibold">${file.title}</div>
+            </th>
+            <td class="px-6 py-4">
+              ${file.numberOfDownloads}
+            </td>
+            <td class="px-6 py-4">
+              ${file.numberOfEmails}
+            </td>
+            <td class="px-6 py-4">
+              <!-- Modal toggle -->
+              <a href="/file/${file.id}" type="button" 
+                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View File</a>
+            </td>
+          </tr>` ;
+                });
+                tbody.innerHTML = files.join("");
+                // onchange event listener on the search input
+                search.addEventListener("keyup", (e) => {
+                    // filter the data and display it in the table
+                    const filteredData = data.filter((file) => {
+                        return (
+                            file.title.toLowerCase().includes(e.target.value.toLowerCase())
+                        );
+                    });
+                    // map through the filtered data and display it in the table
+                    const filterFile = filteredData.map((file, index) => {
+                        return `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <td class="w-4 p-4">
+              ${index + 1}
+            </td>
+            <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+              <div class="text-base font-semibold">${file.title}</div>
+            </th>
+            <td class="px-6 py-4">
+              ${file.numberOfDownloads}
+            <td class="px-6 py-4">
+              ${file.numberOfEmails}
+            </td>
+            <td class="px-6 py-4">
+              <!-- Modal toggle -->
+              <a href="/file/${file.id}" type="button" 
+                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View File</a>
+            </td>
+          </tr>` ;
+                    });
+                    tbody.innerHTML = filterFile.join("");
+                });
+
+            } else {
+                // Login failed, display error message
+                const errorMessage = document.querySelector("#error-message");
+                const errorText = document.querySelector("#error-message p");
+                errorMessage.classList.remove("hidden");
+                errorText.textContent = data.message;
+                // errorMessage.textContent = data.message;
+               
+            }
+
+        });
+
+       
+    </script>
+</body>
+
+</html>
