@@ -59,3 +59,22 @@ export const getAdmin = async (req:Request,res:Response,next:NextFunction) => {
     }
 };
 
+
+export const adminLoginPage = async (req:Request,res:Response,next:NextFunction) => {
+    try {
+        res.render('admin/index') ;
+    } catch (error)
+    {
+        next(error) ;
+    }
+} ;
+
+export const adminDashboard = async (req:Request,res:Response,next:NextFunction) => {
+    try {
+        res.render('admin/dashboard') ;
+    } catch (error)
+    {
+        next(error) ;
+    }
+} ;
+
