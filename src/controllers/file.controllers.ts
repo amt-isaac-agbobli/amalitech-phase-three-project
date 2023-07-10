@@ -105,7 +105,8 @@ export const downloadFileController = async (req: Request, res: Response, next: 
             })
         }
         const fileUrl = file.file_path;
-        res.download(fileUrl);
+        //res.download(fileUrl);
+        res.status(200).download(fileUrl);
         const user: any = (req as CustomRequest).token;
         const userId: number = parseInt(user.id);
         await fileServices.saveDownload(id, userId);

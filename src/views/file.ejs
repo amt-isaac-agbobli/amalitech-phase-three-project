@@ -15,6 +15,7 @@
       src="https://cdn.jsdelivr.net/npm/toastify-js"
     ></script>
   </head>
+
   <body class="bg-gray-100">
     <header class="bg-gray-50 dark:bg-gray-900 shadow-md sticky">
       <nav
@@ -59,7 +60,7 @@
             >
               <li>
                 <a
-                  href="#"
+                  href="/dashboard"
                   class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
                   aria-current="page"
                   >Dashboard</a
@@ -96,10 +97,14 @@
       <div
         class="w-full items-center justify-center p-4 mx-10 md:mx-40 my-10 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700"
       >
-        <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white" id="title">
-        </h5>
-        <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400 " id="description">
-        </p>
+        <h5
+          class="mb-2 text-3xl font-bold text-gray-900 dark:text-white"
+          id="title"
+        ></h5>
+        <p
+          class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400"
+          id="description"
+        ></p>
         <div
           class="items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4"
         >
@@ -133,32 +138,67 @@
       </div>
     </main>
     <script>
-      const title = document.querySelector('#title');
-      const description = document.querySelector('#description');
+      const title = document.querySelector("#title");
+      const description = document.querySelector("#description");
+      const id = window.document.URL.split("/")[4];
       // window.document.URL.split('/')[4]
-      //on window load
-        window.onload = async () => {
-            //get the id from the url
-            const id = window.document.URL.split('/')[4];
-            //fetch the data from the api using await with auth header
-            const response = await fetch(`/api/v1/files/${id}`, {
-                headers: {
-                   'Authorization': 'Bearer ' + localStorage.getItem('token')
-               }
-         });
-             const data = await response.json();
-             console.log(data);
-           
-            if(response.status === 200){
-                title.innerHTML = data.file.title;
-                description.innerHTML = data.file.description;
-            }
-            
-            //set the id to the hidden input
-            document.getElementById('download-form').id.value = id;
-            document.getElementById('email-form').id.value = id;
+      window.onload = async () => {
+        const response = await fetch(`/api/v1/files/${id}`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        const data = await response.json();
+        console.log(data);
+
+        if (response.status === 200) {
+          title.innerHTML = data.file.title;
+          description.innerHTML = data.file.description;
         }
 
-   </script>
+        //set the id to the hidden input
+        document.getElementById("download-form").id.value = id;
+        document.getElementById("email-form").id.value = id;
+      };
+
+      document
+        .getElementById("download-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const response = await fetch(`/api/v1/files/download/${id}`, {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          });
+          //download blob
+          const blob = await response.blob();
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          let filename = title.innerHTML; // default filename
+          if (blob.type === "application/pdf") {
+            filename += ".pdf";
+          } else if (blob.type === "image/jpeg") {
+            filename += ".jpg";
+          } else if (blob.type === "image/png") {
+            filename += ".png";
+          } else if (
+            blob.type ===
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          ) {
+            filename += ".docx";
+          }
+          link.href = url;
+          link.setAttribute("download", filename); // set the download filename based on file type
+          document.body.appendChild(link);
+          link.click(); // programmatically click on the link to initiate download
+          link.remove(); // remove the link from the DOM after download
+
+          console.log(blob);
+          /*if (response.status === 200) {
+                      //how to download the file
+                      window.location.href = data.url;
+                  } */
+        });
+    </script>
   </body>
 </html>
