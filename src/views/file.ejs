@@ -141,7 +141,7 @@
       const title = document.querySelector("#title");
       const description = document.querySelector("#description");
       const id = window.document.URL.split("/")[4];
-      // window.document.URL.split('/')[4]
+     
       window.onload = async () => {
         const response = await fetch(`/api/v1/files/${id}`, {
           headers: {
@@ -149,8 +149,6 @@
           },
         });
         const data = await response.json();
-        console.log(data);
-
         if (response.status === 200) {
           title.innerHTML = data.file.title;
           description.innerHTML = data.file.description;
@@ -174,7 +172,7 @@
           const blob = await response.blob();
           const url = URL.createObjectURL(blob);
           const link = document.createElement("a");
-          let filename = title.innerHTML; // default filename
+          let filename = title.innerHTML; 
           if (blob.type === "application/pdf") {
             filename += ".pdf";
           } else if (blob.type === "image/jpeg") {
@@ -188,17 +186,36 @@
             filename += ".docx";
           }
           link.href = url;
-          link.setAttribute("download", filename); // set the download filename based on file type
+          link.setAttribute("download", filename);
           document.body.appendChild(link);
-          link.click(); // programmatically click on the link to initiate download
-          link.remove(); // remove the link from the DOM after download
-
-          console.log(blob);
-          /*if (response.status === 200) {
-                      //how to download the file
-                      window.location.href = data.url;
-                  } */
+          link.click(); 
+          link.remove(); 
+          
         });
+      //email file
+        document
+            .getElementById("email-form")
+            .addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const response = await fetch(`/api/v1/files/email/${id}`, {
+                method: "POST",
+                headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                id : id
+                }),
+            });
+            const data = await response.json();
+            if (response.status === 200) {
+                alert(data.message);
+            } else {
+                alert(data.message);
+            }
+            });
+            
+    
     </script>
   </body>
 </html>
