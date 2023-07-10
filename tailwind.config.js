@@ -13,6 +13,7 @@ module.exports = {
     require('flowbite/plugin')
 ],
 darkMode: 'class',
+darkMode: 'media',
 theme: {
   extend: {
     colors: {

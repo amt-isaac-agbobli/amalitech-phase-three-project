@@ -6,6 +6,8 @@ import * as fileController from '../controllers/file.controllers';
 
 const userPageRouter: Router = express.Router();
 
+userPageRouter.get('/' , userController.indexPage);
+
 userPageRouter.get('/login' , userController.userLoginPage);
 
 userPageRouter.get('/register' , userController.userRegisterPage);

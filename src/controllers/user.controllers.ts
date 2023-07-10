@@ -169,6 +169,14 @@ export const dashboardPage = async (req: Request, res: Response, next: NextFunct
         next(error)
     }
 }
+export const indexPage = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.redirect('/dashboard');
+    } catch (error) {
+        next(error)
+    }
+}
+
 
 export const verifyPage = async (req: Request, res: Response, next: NextFunction) => {
     try {
