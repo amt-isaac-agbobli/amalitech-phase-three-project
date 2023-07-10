@@ -105,7 +105,6 @@ export const downloadFileController = async (req: Request, res: Response, next: 
             })
         }
         const fileUrl = file.file_path;
-        //res.download(fileUrl);
         res.status(200).download(fileUrl);
         const user: any = (req as CustomRequest).token;
         const userId: number = parseInt(user.id);
@@ -165,3 +164,12 @@ export const getFileStatsByIdController = async (req: Request, res: Response, ne
         next(error);
     }
 } ;
+
+export const uploadFilePage = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.render('admin/upload');
+    } catch (error) {
+        next(error);
+    }
+
+};

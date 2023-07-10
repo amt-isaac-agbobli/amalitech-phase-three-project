@@ -2,6 +2,7 @@ import { Router } from 'express';
 import express from 'express';
 import * as userController from '../controllers/user.controllers';
 import * as adminController from '../controllers/admin.controllers';
+import * as fileController from '../controllers/file.controllers';
 
 const userPageRouter: Router = express.Router();
 
@@ -21,5 +22,7 @@ userPageRouter.get('/file/:id' , userController.filePage);
 userPageRouter.get('/admin' , adminController.adminLoginPage );
 
 userPageRouter.get('/admin/dashboard' , adminController.adminDashboard );
+
+userPageRouter.get('/admin/upload' , fileController.uploadFilePage );
 export default userPageRouter;
 
