@@ -6,8 +6,7 @@
   <title>Dashboard</title>
   <link rel="stylesheet" href="/output.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 </head>
 
 <body class="bg-gray-100">
@@ -238,6 +237,13 @@
         console.log(data)
       }
     });
+
+    logout.addEventListener("click", async (e) => {
+            e.preventDefault();
+            localStorage.removeItem("token");
+            localStorage.removeItem("expiration");
+            window.location.href = "/dashboard";
+        });
 
 
   </script>

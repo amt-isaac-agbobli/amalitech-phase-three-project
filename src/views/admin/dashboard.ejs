@@ -107,6 +107,7 @@
 
         const tbody = document.querySelector("#tbody");
         const search = document.querySelector("#search");
+        const logout = document.querySelector("#logout");
 
 
         window.addEventListener('DOMContentLoaded', async () => {
@@ -118,7 +119,7 @@
             }
 
             if (!localStorage.getItem('token')) {
-                window.location.href = '/admin/index';
+                window.location.href = '/admin/';
             }
 
             const response = await fetch("/api/v1/files/stats", {
@@ -198,7 +199,12 @@
             }
 
         });
-
+        logout.addEventListener("click", async (e) => {
+            e.preventDefault();
+            localStorage.removeItem("token");
+            localStorage.removeItem("expiration");
+            window.location.href = "/admin/";
+        });
        
     </script>
 </body>

@@ -104,6 +104,8 @@
         const description = document.getElementById("description");
         const file = document.querySelector("#file");
         const uplaodForm = document.getElementById("upload");
+        const logout = document.getElementById("logout");
+
 
         window.addEventListener("DOMContentLoaded", async () => {
             console.log(file);
@@ -142,6 +144,14 @@
                 window.location.href = "/admin/dashboard";
             }
         });
+
+        logout.addEventListener("click", async (e) => {
+            e.preventDefault();
+            localStorage.removeItem("token");
+            localStorage.removeItem("expiration");
+            window.location.href = "/admin/";
+        });
+        
 
     </script>
 </body>
