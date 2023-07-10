@@ -61,7 +61,6 @@ export const getFilesController = async (req: Request, res: Response, next: Next
                 "Download Url": url + file.id
             }
         });
-        res.render("index", { files });
         return res.status(200).json(files);
     } catch (error) {
         next(error);
