@@ -130,7 +130,7 @@ export const getFileStats = async () => {
                 },
             },
         });
-        const fileStats = files.map((file) => ({
+        const fileStats = files.map((file:any) => ({
             Id: file.id,
             Title: file.title,
             "Number Of Emails": file.emails.length,
