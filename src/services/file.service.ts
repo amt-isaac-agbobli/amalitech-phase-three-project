@@ -17,6 +17,9 @@ export const uploadFile = async (file: File, adminId: number) => {
     });
 };
 
+
+
+
 export const getFiles = async () => {
     return await db.file.findMany({
         select: {
@@ -126,7 +129,7 @@ export const getFileStats = async () => {
                 },
             },
         });
-        const fileStats = files.map((file) => ({
+        const fileStats = files.map((file :any) => ({
             id: file.id,
             title: file.title,
             numberOfEmails: file.emails.length,
