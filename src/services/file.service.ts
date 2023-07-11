@@ -1,8 +1,8 @@
-import { error } from 'console';
+
 import { db } from '../config/db.server';
 import { File } from '../types/file.type';
 import { sendEmail } from '../utils/send.email';
-import { title } from 'process';
+
 
 
 
@@ -142,7 +142,7 @@ export const getFileStats = async () => {
                 },
             },
         });
-        const fileStats = files.map((file) => ({
+        const fileStats = files.map((file:any) => ({
             Id: file.id,
             Title: file.title,
             "Number Of Emails": file.emails.length,
