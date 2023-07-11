@@ -1,3 +1,4 @@
+import { error } from 'console';
 import { db } from '../config/db.server';
 import { File } from '../types/file.type';
 import { sendEmail } from '../utils/send.email';
@@ -129,11 +130,11 @@ export const getFileStats = async () => {
                 },
             },
         });
-        const fileStats = files.map((file :any) => ({
-            id: file.id,
-            title: file.title,
-            numberOfEmails: file.emails.length,
-            numberOfDownloads: file.downloads.length,
+        const fileStats = files.map((file) => ({
+            Id: file.id,
+            Title: file.title,
+            "Number Of Emails": file.emails.length,
+            "Number Of Downloads": file.downloads.length,
         }));
         return fileStats;
     } catch (error) {
