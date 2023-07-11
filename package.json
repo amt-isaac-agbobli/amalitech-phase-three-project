@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon dist/src/server.js",
     "dev": "nodemon src/server.ts",
-    "build": "tsc -w && copyfiles -u 1 src/views/**/* dist/src/views",
+    "build": "tsc -w ",
     "test": "jest"
   },
   "author": "Agbobli Isaac",
