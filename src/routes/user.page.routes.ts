@@ -18,6 +18,8 @@ userPageRouter.get('/reset-password' , userController.resetPasswordPage);
 
 userPageRouter.get('/dashboard' , userController.dashboardPage);
 
+userPageRouter.get('/profile',userController.profilePage) ;
+
 userPageRouter.get('/verify' , userController.verifyPage);
 
 userPageRouter.get('/file/:id' , userController.filePage);

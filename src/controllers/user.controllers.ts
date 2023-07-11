@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 import * as userService from '../services/user.service';
-import {sendVerificationEmail} from '../services/otp.service'
+import { sendVerificationEmail } from '../services/otp.service'
 import { compareData, generateToken } from "../utils/helper";
 import { CustomRequest } from '../interfaces/auth.interfaces';
 
@@ -9,7 +9,7 @@ import { CustomRequest } from '../interfaces/auth.interfaces';
  * @desc Controller for User Registration
  * @access Public
  * @route POST /api/v1/users/sign-up 
- * */  
+ * */
 export const userReigister = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const errors = validationResult(req);
@@ -17,35 +17,35 @@ export const userReigister = async (req: Request, res: Response, next: NextFunct
             return res.status(400).json({ errors: errors.array() });
         }
         const { email, password } = req.body;
-        if(!password){
+        if (!password) {
             return res.status(400).json({
-                message : "Password is required"
+                message: "Password is required"
             });
-        }  
-        if(!email){
+        }
+        if (!email) {
             return res.status(400).json({
-                message : "Email is required"
+                message: "Email is required"
             });
-        }  
+        }
 
-        const userExit =  await userService.userExit(email);
-        if(userExit){
-            res.status(400).json({ 
+        const userExit = await userService.userExit(email);
+        if (userExit) {
+            res.status(400).json({
                 message: "Email already exist"
             });
         }
         const newUser = await userService.userReigister(req.body);
-       
+
         const otpDetails = {
-            email:newUser.email,
+            email: newUser.email,
             subject: "Email Verification",
             message: "Verify your email with the following code below.",
             duration: 1
         };
-        
-        await sendVerificationEmail(newUser.email , otpDetails);
+
+        await sendVerificationEmail(newUser.email, otpDetails);
         return res.status(201).json({
-            Message : "User account was created successful check your email to verify your account"
+            Message: "User account was created successful check your email to verify your account"
         });
     } catch (error) {
         next(error)
@@ -55,7 +55,7 @@ export const userReigister = async (req: Request, res: Response, next: NextFunct
  * @desc Controller for User Sign in 
  * @access Public
  * @route POST /api/v1/users/sign-in 
- * */  
+ * */
 export const userLogin = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const errors = validationResult(req);
@@ -63,19 +63,21 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
             return res.status(400).json({ errors: errors.array() });
         }
         const { email, password } = req.body;
-        if(!password){
+        if (!password) {
             return res.status(400).json({
-                message: "Password is required"});
+                message: "Password is required"
+            });
         }
-        if(!email){
+        if (!email) {
             return res.status(400).json({
-                message: "Email is required"});
+                message: "Email is required"
+            });
         }
-        
+
         const user = await userService.userLogin(email, password);
-        if(!user){
+        if (!user) {
             return res.status(400).json({
-                message: "User not found" 
+                message: "User not found"
             });
         }
         const passwordMatch = await compareData(password, user.password);
@@ -84,12 +86,12 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
                 message: "Invalid Password"
             });
         }
-        if(!user.isVarified){
-          // res.render('verify' , {email: user.email}) ;
+        if (!user.isVarified) {
+            // res.render('verify' , {email: user.email}) ;
         }
 
-        const token = await generateToken(user.id, user.email , user.role);
-        res.cookie('token', token, { httpOnly: true, maxAge:  1000 * 60 * 60 * 24 });
+        const token = await generateToken(user.id, user.email, user.role);
+        res.cookie('token', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 });
         return res.status(200).json({
             Token: token
         });
@@ -102,7 +104,7 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
  * @desc Controller for User Profile
  * @access Private
  * @route POST /api/v1/users/profile 
- * */  
+ * */
 export const userProfile = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user: any = (req as CustomRequest).token;
@@ -198,5 +200,14 @@ export const filePage = async (req: Request, res: Response, next: NextFunction) 
         res.render('file');
     } catch (error) {
         next(error)
+    }
+}
+
+export const profilePage = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+
+        res.render('profile');
+    } catch (error) {
+        next(error);
     }
 }
